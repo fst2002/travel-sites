@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>西班牙一周旅行攻略 · 北京出发</title>
+  <style>
+    :root {
+      --terracotta: #c65a3a;
+      --terracotta-dark: #a7462b;
+      --saffron: #f2b544;
+      --cobalt: #235c96;
+      --olive: #607744;
+      --cream: #fbf5eb;
+      --sand: #f4e7d0;
+      --rose: #d97b7b;
+      --ink: #3a2a22;
+      --muted: #7c6758;
+      --white: #ffffff;
+      --shadow: rgba(58, 42, 34, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(242,181,68,.18), transparent 30%),
+        radial-gradient(circle at 90% 15%, rgba(35,92,150,.1), transparent 28%),
+        radial-gradient(circle at 80% 80%, rgba(198,90,58,.12), transparent 30%),
+        linear-gradient(135deg, rgba(255,255,255,.35), rgba(255,255,255,0));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .floating-dots {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      opacity: .25;
+      animation: drift linear infinite;
+    }
+
+    @keyframes drift {
+      0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+      10% { opacity: .25; }
+      100% { transform: translateY(-20vh) translateX(40px) rotate(360deg); opacity: 0; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 42px;
+      background: rgba(251, 245, 235, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(198, 90, 58, 0.18);
+    }
+
+    .nav-brand {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--terracotta-dark);
+      letter-spacing: 1px;
+    }
+
+    .nav-brand span { color: var(--cobalt); }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: .88rem;
+      letter-spacing: 1px;
+      transition: color .25s;
+    }
+
+    .nav-links a:hover { color: var(--terracotta-dark); }
+
+    .hero {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      padding: 120px 24px 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background:
+        linear-gradient(140deg, rgba(198,90,58,.16) 0%, rgba(242,181,68,.14) 35%, rgba(35,92,150,.08) 100%),
+        var(--cream);
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 520px;
+      height: 520px;
+      right: -120px;
+      top: -160px;
+      background: radial-gradient(circle, rgba(242,181,68,.28), transparent 72%);
+    }
+
+    .hero::after {
+      width: 420px;
+      height: 420px;
+      left: -100px;
+      bottom: -100px;
+      background: radial-gradient(circle, rgba(35,92,150,.16), transparent 72%);
+    }
+
+    .hero-card {
+      position: relative;
+      max-width: 1120px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .hero-copy {
+      text-align: left;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(198, 90, 58, .25);
+      background: rgba(255,255,255,.55);
+      color: var(--terracotta-dark);
+      font-size: .78rem;
+      letter-spacing: 3px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 1.08;
+      margin-bottom: 18px;
+      color: var(--ink);
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--terracotta), var(--cobalt));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 1.04rem;
+      color: var(--muted);
+      line-height: 1.95;
+      max-width: 640px;
+      margin-bottom: 28px;
+    }
+
+    .hero-tags {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 34px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--white);
+      box-shadow: 0 6px 16px rgba(0,0,0,.08);
+    }
+
+    .t-terracotta { background: linear-gradient(135deg, var(--terracotta), var(--terracotta-dark)); }
+    .t-cobalt { background: linear-gradient(135deg, var(--cobalt), #174874); }
+    .t-saffron { background: linear-gradient(135deg, var(--saffron), #d9961a); }
+    .t-olive { background: linear-gradient(135deg, var(--olive), #445731); }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      gap: 14px;
+      max-width: 760px;
+    }
+
+    .hero-stat {
+      background: rgba(255,255,255,.74);
+      border: 1px solid rgba(198,90,58,.14);
+      border-radius: 18px;
+      padding: 18px 16px;
+      box-shadow: 0 8px 22px var(--shadow);
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: var(--terracotta-dark);
+      margin-bottom: 4px;
+    }
+
+    .hero-stat span {
+      font-size: .76rem;
+      letter-spacing: 1.8px;
+      color: var(--muted);
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .arch {
+      position: relative;
+      width: min(420px, 86vw);
+      height: 500px;
+      border-radius: 220px 220px 24px 24px;
+      background: linear-gradient(180deg, #fff7ec 0%, #f5e6cf 100%);
+      border: 10px solid rgba(255,255,255,.65);
+      box-shadow: 0 20px 50px rgba(58,42,34,.14);
+      overflow: hidden;
+    }
+
+    .arch::before {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border-radius: 210px 210px 16px 16px;
+      border: 2px solid rgba(198,90,58,.16);
+    }
+
+    .sun {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffd67a 0%, var(--saffron) 75%, rgba(242,181,68,0) 76%);
+      top: 66px;
+      right: 70px;
+      opacity: .96;
+    }
+
+    .sagrada,
+    .tower,
+    .hill,
+    .tile-band {
+      position: absolute;
+    }
+
+    .hill {
+      left: -10%;
+      right: -10%;
+      bottom: 0;
+      height: 160px;
+      background: linear-gradient(180deg, #d7b892 0%, #c59a6b 100%);
+      border-radius: 50% 50% 0 0;
+    }
+
+    .sagrada {
+      left: 78px;
+      bottom: 110px;
+      width: 92px;
+      height: 220px;
+      background: linear-gradient(180deg, #d8a672 0%, #bb7d43 100%);
+      clip-path: polygon(16% 100%, 16% 64%, 26% 64%, 31% 30%, 39% 64%, 49% 64%, 54% 12%, 62% 64%, 73% 64%, 79% 40%, 84% 64%, 84% 100%);
+      filter: drop-shadow(0 8px 10px rgba(0,0,0,.12));
+    }
+
+    .tower {
+      right: 92px;
+      bottom: 112px;
+      width: 76px;
+      height: 196px;
+      background: linear-gradient(180deg, #8f4b35 0%, #6f3422 100%);
+      clip-path: polygon(22% 100%, 22% 34%, 36% 34%, 36% 10%, 50% 0, 64% 10%, 64% 34%, 78% 34%, 78% 100%);
+      filter: drop-shadow(0 8px 10px rgba(0,0,0,.12));
+    }
+
+    .tile-band {
+      left: 18px;
+      right: 18px;
+      bottom: 22px;
+      height: 54px;
+      border-radius: 999px;
+      background:
+        linear-gradient(90deg,
+          rgba(35,92,150,.9) 0 8%,
+          rgba(242,181,68,.9) 8% 16%,
+          rgba(198,90,58,.9) 16% 24%,
+          rgba(96,119,68,.9) 24% 32%,
+          rgba(35,92,150,.9) 32% 40%,
+          rgba(242,181,68,.9) 40% 48%,
+          rgba(198,90,58,.9) 48% 56%,
+          rgba(96,119,68,.9) 56% 64%,
+          rgba(35,92,150,.9) 64% 72%,
+          rgba(242,181,68,.9) 72% 80%,
+          rgba(198,90,58,.9) 80% 88%,
+          rgba(96,119,68,.9) 88% 100%);
+      box-shadow: inset 0 0 0 8px rgba(255,255,255,.2);
+    }
+
+    .plane-line {
+      position: absolute;
+      top: 108px;
+      left: 56px;
+      right: 170px;
+      height: 2px;
+      border-top: 2px dashed rgba(35,92,150,.35);
+    }
+
+    .plane {
+      position: absolute;
+      top: 96px;
+      left: 40px;
+      font-size: 1.4rem;
+      transform: rotate(12deg);
+    }
+
+    .section { position: relative; z-index: 2; }
+    .section-inner { max-width: 1160px; margin: 0 auto; padding: 90px 30px; }
+    .section-head { text-align: center; margin-bottom: 56px; }
+
+    .section-tag {
+      display: inline-block;
+      font-size: .75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--terracotta-dark);
+      background: rgba(198,90,58,.08);
+      border: 1px solid rgba(198,90,58,.18);
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(1.7rem, 4vw, 2.9rem);
+      line-height: 1.2;
+      color: var(--ink);
+      font-weight: 900;
+    }
+
+    .section-title em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--terracotta), var(--cobalt));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-sub {
+      max-width: 720px;
+      margin: 14px auto 0;
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: .98rem;
+    }
+
+    .bg-paper { background: rgba(255,255,255,.45); }
+    .bg-warm  { background: linear-gradient(180deg, #fff8ef 0%, #faf2e4 100%); }
+    .bg-blue  { background: linear-gradient(180deg, #f3f8fd 0%, #fcf6eb 100%); }
+    .bg-gold  { background: linear-gradient(180deg, #fff6e0 0%, #fbf5eb 100%); }
+
+    .overview-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 14px; }
+    .overview-card {
+      background: var(--white);
+      border: 1px solid rgba(198,90,58,.12);
+      border-radius: 18px;
+      padding: 20px 16px;
+      box-shadow: 0 8px 22px var(--shadow);
+      transition: transform .28s ease;
+    }
+    .overview-card:hover { transform: translateY(-6px); }
+    .overview-day {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .od1,.od4,.od7 { background: linear-gradient(135deg, var(--terracotta), var(--terracotta-dark)); }
+    .od2,.od5 { background: linear-gradient(135deg, var(--cobalt), #174874); }
+    .od3,.od6 { background: linear-gradient(135deg, var(--olive), #445731); }
+    .overview-card h3 { font-size: 1rem; margin-bottom: 10px; color: var(--ink); }
+    .overview-card p { font-size: .82rem; line-height: 1.7; color: var(--muted); min-height: 78px; }
+    .overview-card .mini-cost { margin-top: 12px; font-size: .74rem; color: var(--terracotta-dark); font-weight: 700; }
+
+    .day-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .day-card {
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(198,90,58,.12);
+      border-radius: 22px;
+      padding: 28px 26px;
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+    .day-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+    .day-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: .78rem;
+      color: var(--white);
+      font-weight: 800;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, var(--terracotta), var(--terracotta-dark));
+    }
+    .day-city { color: var(--cobalt); font-weight: 800; font-size: .9rem; }
+    .day-card h3 { font-size: 1.35rem; color: var(--ink); margin-bottom: 8px; }
+    .day-summary { color: var(--muted); line-height: 1.85; font-size: .92rem; margin-bottom: 18px; }
+
+    .timeline { display: grid; gap: 12px; margin-bottom: 18px; }
+    .timeline-item {
+      background: #fffdfa;
+      border: 1px solid rgba(35,92,150,.08);
+      border-radius: 14px;
+      padding: 14px 14px 14px 16px;
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+    .timeline-time { font-size: .78rem; font-weight: 800; color: var(--terracotta-dark); padding-top: 2px; }
+    .timeline-item h4 { font-size: .95rem; color: var(--ink); margin-bottom: 4px; }
+    .timeline-item p { font-size: .83rem; line-height: 1.75; color: var(--muted); }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .chip {
+      font-size: .73rem;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(35,92,150,.08);
+      color: var(--cobalt);
+      font-weight: 700;
+    }
+
+    .photo-tips {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(35,92,150,.08), rgba(198,90,58,.08));
+      border: 1px solid rgba(35,92,150,.12);
+    }
+    .photo-tips h5 { font-size: .82rem; letter-spacing: 1px; color: var(--cobalt); margin-bottom: 10px; }
+    .photo-tips ul { list-style: none; display: grid; gap: 7px; }
+    .photo-tips li {
+      font-size: .83rem;
+      line-height: 1.7;
+      color: var(--muted);
+      padding-left: 18px;
+      position: relative;
+    }
+    .photo-tips li::before { content: '📸'; position: absolute; left: 0; top: 0; }
+
+    .food-grid,.photo-grid,.hotel-grid,.budget-cards,.tips-grid { display: grid; gap: 20px; }
+    .food-grid { grid-template-columns: repeat(2, 1fr); }
+    .photo-grid { grid-template-columns: repeat(3, 1fr); }
+    .hotel-grid { grid-template-columns: repeat(3, 1fr); }
+    .budget-cards { grid-template-columns: repeat(5, 1fr); }
+    .tips-grid { grid-template-columns: repeat(3, 1fr); }
+
+    .food-card,.photo-card,.hotel-card,.tip-card {
+      background: rgba(255,255,255,.84);
+      border: 1px solid rgba(198,90,58,.12);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 26px var(--shadow);
+      transition: transform .28s ease;
+    }
+    .food-card:hover,.photo-card:hover,.hotel-card:hover,.tip-card:hover { transform: translateY(-6px); }
+    .food-card.featured { grid-column: span 2; background: linear-gradient(135deg, rgba(198,90,58,.08), rgba(242,181,68,.1)); }
+
+    .food-head { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .food-emoji,.photo-emoji,.hotel-emoji,.tip-emoji { font-size: 2rem; flex-shrink: 0; }
+    .food-card h3,.photo-card h3,.hotel-card h3,.tip-card h3 { font-size: 1.06rem; color: var(--ink); margin-bottom: 8px; }
+    .food-card p,.photo-card p,.hotel-card p,.tip-card p { font-size: .86rem; line-height: 1.8; color: var(--muted); }
+
+    .meta-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .meta {
+      font-size: .74rem;
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: var(--terracotta-dark);
+      background: rgba(198,90,58,.08);
+      font-weight: 700;
+    }
+
+    .hotel-card ul,.tip-card ul { list-style: none; margin-top: 10px; display: grid; gap: 7px; }
+    .hotel-card li,.tip-card li {
+      font-size: .83rem;
+      color: var(--muted);
+      line-height: 1.7;
+      padding-left: 18px;
+      position: relative;
+    }
+    .hotel-card li::before,.tip-card li::before {
+      content: '•';
+      position: absolute;
+      left: 2px;
+      top: 0;
+      color: var(--terracotta);
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    .budget-table-wrap {
+      background: rgba(255,255,255,.85);
+      border-radius: 22px;
+      box-shadow: 0 12px 32px var(--shadow);
+      overflow: hidden;
+      border: 1px solid rgba(198,90,58,.12);
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th { background: linear-gradient(135deg, var(--terracotta), var(--cobalt)); color: var(--white); text-align: left; padding: 16px 18px; font-size: .9rem; letter-spacing: .4px; }
+    td { padding: 14px 18px; border-bottom: 1px solid rgba(58,42,34,.07); font-size: .87rem; color: var(--muted); vertical-align: top; }
+    td strong { color: var(--ink); }
+    tr.total-row td { background: rgba(242,181,68,.14); font-weight: 800; color: var(--terracotta-dark); font-size: .96rem; }
+
+    .budget-card {
+      border-radius: 18px;
+      padding: 18px 14px;
+      color: var(--white);
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(0,0,0,.12);
+    }
+    .bc1 { background: linear-gradient(135deg, var(--terracotta), var(--terracotta-dark)); }
+    .bc2 { background: linear-gradient(135deg, var(--cobalt), #174874); }
+    .bc3 { background: linear-gradient(135deg, var(--olive), #445731); }
+    .bc4 { background: linear-gradient(135deg, var(--saffron), #d9961a); }
+    .bc5 { background: linear-gradient(135deg, var(--rose), #bc6363); }
+    .budget-card .num { display: block; font-size: 1.28rem; font-weight: 900; margin: 6px 0 4px; }
+    .budget-card .label { font-size: .72rem; letter-spacing: 1.4px; opacity: .88; }
+
+    .cta {
+      position: relative;
+      z-index: 2;
+      padding: 96px 30px;
+      background: linear-gradient(135deg, rgba(198,90,58,.1), rgba(242,181,68,.14), rgba(35,92,150,.08));
+      text-align: center;
+    }
+    .cta-box {
+      max-width: 760px;
+      margin: 0 auto;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(198,90,58,.14);
+      border-radius: 28px;
+      padding: 54px 34px;
+      box-shadow: 0 18px 48px var(--shadow);
+    }
+    .cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--ink); margin-bottom: 14px; }
+    .cta p { color: var(--muted); line-height: 1.9; margin-bottom: 28px; font-size: .98rem; }
+    .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .cta-btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 13px 28px;
+      border-radius: 999px;
+      font-size: .92rem;
+      font-weight: 800;
+      color: var(--white);
+      transition: transform .28s ease;
+      box-shadow: 0 10px 24px rgba(0,0,0,.12);
+    }
+    .cta-btn:hover { transform: translateY(-3px); }
+    .btn-terracotta { background: linear-gradient(135deg, var(--terracotta), var(--terracotta-dark)); }
+    .btn-cobalt { background: linear-gradient(135deg, var(--cobalt), #174874); }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      background: #3f2e25;
+      color: rgba(255,255,255,.75);
+      text-align: center;
+      padding: 34px 22px;
+      line-height: 1.8;
+      font-size: .85rem;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-card { grid-template-columns: 1fr; }
+      .hero-copy { text-align: center; }
+      .hero-tags { justify-content: center; }
+      .hero-stats { max-width: none; }
+      .overview-grid { grid-template-columns: repeat(3, 1fr); }
+      .day-grid,.food-grid,.photo-grid,.hotel-grid,.tips-grid,.budget-cards { grid-template-columns: repeat(2, 1fr); }
+      .food-card.featured { grid-column: span 2; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 14px 18px; }
+      .nav-links { display: none; }
+      .section-inner { padding: 64px 18px; }
+      .hero { padding-top: 98px; }
+      .hero-stats { grid-template-columns: repeat(2, 1fr); }
+      .overview-grid,.day-grid,.food-grid,.photo-grid,.hotel-grid,.tips-grid,.budget-cards { grid-template-columns: 1fr; }
+      .food-card.featured { grid-column: span 1; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .arch { height: 430px; }
+      .sagrada { left: 64px; bottom: 90px; }
+      .tower { right: 72px; bottom: 92px; }
+      th, td { padding: 12px 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-dots" id="floatingDots"></div>
+
+  <nav>
+    <div class="nav-brand">España<span>Week</span></div>
+    <ul class="nav-links">
+      <li><a href="#overview">行程概览</a></li>
+      <li><a href="#itinerary">详细行程</a></li>
+      <li><a href="#food">美食</a></li>
+      <li><a href="#spots">拍照</a></li>
+      <li><a href="#hotel">住宿</a></li>
+      <li><a href="#budget">预算</a></li>
+      <li><a href="#tips">贴士</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero" id="top">
+    <div class="hero-card">
+      <div class="hero-copy reveal">
+        <div class="eyebrow">✦ 北京出发 · 西班牙 7 Days · Mediterranean Dream ✦</div>
+        <h1>一周漫游<em>西班牙</em><br />把热烈阳光和高迪带回家</h1>
+        <p class="hero-desc">
+          从北京飞往伊比利亚半岛，用 7 天时间走进 <strong>马德里、托莱多、巴塞罗那</strong>。
+          看皇宫与教堂、在老城吃 tapas、在圣家堂前等一束午后天光、在巴塞罗那海边吹风。
+          这是一份兼顾预算与体验的西班牙一周自由行网页攻略，适合第一次去西班牙的人直接照着走。
+        </p>
+        <div class="hero-tags">
+          <span class="hero-tag t-terracotta">🇪🇸 经典首次西班牙线</span>
+          <span class="hero-tag t-cobalt">📸 高颜值拍照机位</span>
+          <span class="hero-tag t-saffron">🍤 Tapas & Paella</span>
+          <span class="hero-tag t-olive">💶 个人预算 10000 元</span>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>7</strong><span>旅行天数</span></div>
+          <div class="hero-stat"><strong>3</strong><span>核心城市</span></div>
+          <div class="hero-stat"><strong>10K</strong><span>个人预算</span></div>
+          <div class="hero-stat"><strong>12+</strong><span>拍照点 & 美食</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="arch">
+          <div class="sun"></div>
+          <div class="plane-line"></div>
+          <div class="plane">✈️</div>
+          <div class="sagrada"></div>
+          <div class="tower"></div>
+          <div class="hill"></div>
+          <div class="tile-band"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-paper" id="overview">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <div class="section-tag">Overview</div>
+        <h2 class="section-title">7 天路线 <em>一眼看懂</em></h2>
+        <p class="section-sub">整体安排以“马德里进、巴塞罗那出”为思路，减少折返，兼顾首次到访西班牙最值得看的城市与建筑。</p>
+      </div>
+
+      <div class="overview-grid">
+        <div class="overview-card reveal"><span class="overview-day od1">DAY 1</span><h3>北京 → 马德里</h3><p>长途飞行抵达，入住市中心，轻松逛太阳门广场、马约尔广场，适应时差。</p><div class="mini-cost">预估 ¥5600 内含机票主成本</div></div>
+        <div class="overview-card reveal"><span class="overview-day od2">DAY 2</span><h3>马德里经典首刷</h3><p>普拉多博物馆、丽池公园、格兰大道、马德里皇宫，一天把首都精华走完。</p><div class="mini-cost">门票+餐饮约 ¥260</div></div>
+        <div class="overview-card reveal"><span class="overview-day od3">DAY 3</span><h3>托莱多一日</h3><p>从马德里高铁往返古城托莱多，石板路、教堂、山城全景非常出片。</p><div class="mini-cost">交通+门票约 ¥220</div></div>
+        <div class="overview-card reveal"><span class="overview-day od4">DAY 4</span><h3>马德里 → 巴塞罗那</h3><p>AVE 高铁转场，下午进哥特区、兰布拉大道和波盖利亚市场，进入高迪宇宙。</p><div class="mini-cost">高铁+餐饮约 ¥420</div></div>
+        <div class="overview-card reveal"><span class="overview-day od5">DAY 5</span><h3>圣家堂 & 高迪日</h3><p>圣家堂、巴特罗之家、米拉之家、格拉西亚大道，是摄影和建筑党高光日。</p><div class="mini-cost">门票+餐饮约 ¥520</div></div>
+        <div class="overview-card reveal"><span class="overview-day od6">DAY 6</span><h3>桂尔公园 + 海边</h3><p>清晨桂尔公园拍彩色马赛克，下午去巴塞罗那海滩和蒙锥克看日落。</p><div class="mini-cost">门票+交通约 ¥260</div></div>
+        <div class="overview-card reveal"><span class="overview-day od7">DAY 7</span><h3>购物 & 返回北京</h3><p>最后采购火腿、橄榄油、巧克力，在巴塞罗那机场返程。</p><div class="mini-cost">伴手礼+交通约 ¥400</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-warm" id="itinerary">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <div class="section-tag">Itinerary</div>
+        <h2 class="section-title">详细行程 <em>按天拆开</em></h2>
+        <p class="section-sub">每一天都给出上午、下午、晚上安排，并补上拍照建议、交通方式和吃什么最合适。</p>
+      </div>
+
+      <div class="day-grid">
+        <article class="day-card reveal">
+          <div class="day-top"><span class="day-badge">DAY 1</span><span class="day-city">Madrid</span></div>
+          <h3>北京飞马德里，慢节奏开场</h3>
+          <p class="day-summary">第一天重点不是赶景点，而是平稳适应西班牙时间。建议住在太阳门广场或 Gran Vía 附近，方便步行。</p>
+          <div class="timeline">
+            <div class="timeline-item"><div class="timeline-time">08:00-18:00</div><div><h4>国际航班</h4><p>北京出发直飞或经停前往马德里，预算按提前 1-2 个月购买，往返约 ¥4800-5600。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">19:30</div><div><h4>入住市中心酒店</h4><p>推荐 Sol / Gran Vía / Atocha 区域，首晚尽量不折腾，步行就能逛核心老城。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">20:30</div><div><h4>太阳门广场 + 马约尔广场</h4><p>夜色刚起时很有氛围，街头艺人很多，适合拍第一组“到达西班牙”照片。</p><div class="chips"><span class="chip">广角拍广场夜景</span><span class="chip">马约尔拱门最出片</span></div></div></div>
+            <div class="timeline-item"><div class="timeline-time">21:30</div><div><h4>Tapas 轻晚餐</h4><p>点一份西班牙土豆蛋饼、火腿拼盘、蒜香虾，别吃太撑，给时差留余地。</p></div></div>
+          </div>
+          <div class="photo-tips"><h5>今日拍照建议</h5><ul><li>马约尔广场选择蓝调时刻拍建筑立面，画面最有电影感。</li><li>太阳门广场的“熊与草莓树”雕像适合打卡照。</li><li>夜景尽量靠路灯边缘拍，肤色更干净。</li></ul></div>
+        </article>
+
+        <article class="day-card reveal">
+          <div class="day-top"><span class="day-badge">DAY 2</span><span class="day-city">Madrid</span></div>
+          <h3>马德里皇宫、博物馆与大街漫步</h3>
+          <p class="day-summary">这是首都精华日，路线顺，步行和地铁即可完成，适合第一次来西班牙的人高效打卡。</p>
+          <div class="timeline">
+            <div class="timeline-item"><div class="timeline-time">09:00</div><div><h4>Chocolatería San Ginés 早餐</h4><p>经典 churros 蘸热巧克力，老店氛围感很足，拍食物和店内灯光都很好看。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">10:30</div><div><h4>马德里皇宫 + 阿穆德纳大教堂</h4><p>皇宫外立面很震撼，台阶与广场有很强空间感，适合拍旅行大片。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">14:00</div><div><h4>普拉多博物馆</h4><p>如果你对艺术有兴趣可以停留 2 小时；若只是轻度打卡，重点看戈雅和委拉斯凯兹即可。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">17:00</div><div><h4>丽池公园划船/散步</h4><p>水晶宫、湖边纪念碑很适合傍晚拍人像，光线柔和，氛围浪漫。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">20:00</div><div><h4>格兰大道晚餐</h4><p>推荐尝试烤乳猪或海鲜饭，也可以去 rooftop bar 看夜景。</p></div></div>
+          </div>
+          <div class="photo-tips"><h5>今日拍照建议</h5><ul><li>皇宫外广场建议低机位拍全景，建筑比例更震撼。</li><li>丽池公园的水晶宫适合中焦拍“玻璃 + 树影”。</li><li>格兰大道夜景适合站在斑马线中央等待车流灯轨。</li></ul></div>
+        </article>
+
+        <article class="day-card reveal">
+          <div class="day-top"><span class="day-badge">DAY 3</span><span class="day-city">Toledo</span></div>
+          <h3>托莱多古城一日往返</h3>
+          <p class="day-summary">托莱多距离马德里近，是最值得的一日游古城。基督教、伊斯兰、犹太文化叠加，城市本身就是一座露天博物馆。</p>
+          <div class="timeline">
+            <div class="timeline-item"><div class="timeline-time">08:30</div><div><h4>马德里 Atocha 站出发</h4><p>乘坐 Renfe 高铁 35 分钟左右直达托莱多，单程约 €14-20。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">10:00</div><div><h4>托莱多主教座堂</h4><p>内部非常华丽，是西班牙最伟大的哥特式教堂之一，喜欢宗教建筑一定不要错过。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">12:30</div><div><h4>旧城区石板路漫游</h4><p>托莱多最迷人的不是某一个点，而是随处可见的巷子转角和山城高低起伏。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">15:00</div><div><h4>圣马丁桥 / 观景台</h4><p>建议打车或公交去 Mirador del Valle，看整个托莱多古城全景，这是封面级机位。</p><div class="chips"><span class="chip">古城全景</span><span class="chip">金色夕阳</span></div></div></div>
+            <div class="timeline-item"><div class="timeline-time">18:30</div><div><h4>返回马德里</h4><p>晚上回市区，可简单吃火腿三明治或去市场继续 tapas 巡游。</p></div></div>
+          </div>
+          <div class="photo-tips"><h5>今日拍照建议</h5><ul><li>Mirador del Valle 建议傍晚去，城墙和教堂层次感最好。</li><li>古城巷子适合穿长裙或风衣拍“走路背影”。</li><li>主教座堂外墙适合竖构图，把人压在画面下三分之一。</li></ul></div>
+        </article>
+
+        <article class="day-card reveal">
+          <div class="day-top"><span class="day-badge">DAY 4</span><span class="day-city">Barcelona</span></div>
+          <h3>AVE 高铁去巴塞罗那，进入高迪宇宙</h3>
+          <p class="day-summary">当天重点是城市切换，不安排太多重门票景点，保持轻盈，把精力留给第二天的高迪重头戏。</p>
+          <div class="timeline">
+            <div class="timeline-item"><div class="timeline-time">09:00</div><div><h4>马德里 → 巴塞罗那</h4><p>乘 AVE 高铁约 2.5-3 小时，建议提前购票，常见价格 €35-60。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">13:00</div><div><h4>入住哥特区 / Eixample 酒店</h4><p>哥特区氛围更老城，Eixample 更整洁安全，首访推荐 Eixample。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">15:00</div><div><h4>兰布拉大道 + 波盖利亚市场</h4><p>水果杯、海鲜、火腿摊很丰富，适合边逛边吃，拍摄色彩感极强。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">17:30</div><div><h4>哥特区街巷散步</h4><p>巴塞罗那主教座堂、石墙和小广场都很耐拍，适合傍晚人像和街拍。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">20:00</div><div><h4>Tapas 晚餐 + Sangria</h4><p>推荐 patatas bravas、croquetas、烤章鱼。第一次在巴塞罗那，别错过街头热闹氛围。</p></div></div>
+          </div>
+          <div class="photo-tips"><h5>今日拍照建议</h5><ul><li>波盖利亚市场适合近距离拍食物和彩色摊位。</li><li>哥特区建议利用窄巷透视线拍“深巷故事感”。</li><li>主教座堂侧面小广场适合低饱和调色，电影感很强。</li></ul></div>
+        </article>
+
+        <article class="day-card reveal">
+          <div class="day-top"><span class="day-badge">DAY 5</span><span class="day-city">Barcelona</span></div>
+          <h3>圣家堂、巴特罗之家、米拉之家高迪日</h3>
+          <p class="day-summary">今天是全程最“值门票”的一天。务必提前预约圣家堂，若想控制预算，巴特罗之家与米拉之家二选一即可。</p>
+          <div class="timeline">
+            <div class="timeline-item"><div class="timeline-time">09:00</div><div><h4>圣家堂内部参观</h4><p>高迪最伟大的作品。上午阳光从彩色玻璃投射进来，教堂内部色彩像梦一样。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">12:00</div><div><h4>格拉西亚大道午餐</h4><p>可以安排海鲜饭或西班牙海鲜拼盘，拍街景和建筑很方便。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">14:00</div><div><h4>巴特罗之家</h4><p>外立面的彩色骨骼感立面极具辨识度，是最典型的“巴塞罗那感”。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">16:30</div><div><h4>米拉之家屋顶</h4><p>若预算充足可继续参观，屋顶烟囱群很适合拍抽象建筑照片。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">20:00</div><div><h4>圣家堂夜景二刷</h4><p>晚饭后回到圣家堂外广场，蓝调时刻拍外立面非常震撼。</p></div></div>
+          </div>
+          <div class="photo-tips"><h5>今日拍照建议</h5><ul><li>圣家堂内部用广角拍天顶彩窗，ISO 不要拉太高。</li><li>巴特罗之家对街长焦压缩立面纹理最美。</li><li>晚上的圣家堂建议站在小公园水面边拍倒影。</li></ul></div>
+        </article>
+
+        <article class="day-card reveal">
+          <div class="day-top"><span class="day-badge">DAY 6</span><span class="day-city">Barcelona</span></div>
+          <h3>桂尔公园彩色晨光 + 海边日落</h3>
+          <p class="day-summary">这一天是色彩最多的一天。上午看高迪的幻想曲线，下午去海边和缆车、城堡看地中海夕阳。</p>
+          <div class="timeline">
+            <div class="timeline-item"><div class="timeline-time">08:00</div><div><h4>桂尔公园入园</h4><p>清晨人少，著名蜥蜴喷泉和马赛克长椅更容易拍到空景。建议买最早一批门票。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">11:30</div><div><h4>轻午餐：Bocadillo + 咖啡</h4><p>简单吃西班牙三明治，节省预算也方便继续走行程。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">14:00</div><div><h4>巴塞罗那海滩 / Barceloneta</h4><p>海滩、棕榈树、街头音乐和慢生活，适合拍轻松度假感照片。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">17:30</div><div><h4>蒙锥克山 / 缆车 / 城堡</h4><p>这里是看整座巴塞罗那和港口夕阳的绝佳位置，氛围非常松弛。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">21:00</div><div><h4>弗拉明戈表演或海鲜晚餐</h4><p>若预算还充足，可以看一场小型 flamenco；如果想更实惠，就吃海边海鲜饭。</p></div></div>
+          </div>
+          <div class="photo-tips"><h5>今日拍照建议</h5><ul><li>桂尔公园长椅从侧前方拍，马赛克纹理最完整。</li><li>巴塞罗那海滩适合逆光拍剪影和风吹发丝。</li><li>蒙锥克看城景时建议用手机全景模式拍横幅大片。</li></ul></div>
+        </article>
+
+        <article class="day-card reveal">
+          <div class="day-top"><span class="day-badge">DAY 7</span><span class="day-city">Barcelona</span></div>
+          <h3>最后采购，带着西班牙味道回北京</h3>
+          <p class="day-summary">最后一天不再排硬核景点，以购物、慢逛、机场返程为主，给旅程一个轻松收尾。</p>
+          <div class="timeline">
+            <div class="timeline-item"><div class="timeline-time">09:30</div><div><h4>市场采购伴手礼</h4><p>火腿真空包、橄榄油、藏红花、西班牙饼干、巧克力和磁贴都适合带回国。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">11:30</div><div><h4>La Rambla / El Corte Inglés 最后逛街</h4><p>如果需要退税，记得留好发票和护照信息，机场统一办理。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">13:30</div><div><h4>告别午餐</h4><p>推荐一顿简单的火腿三明治、海鲜饭或 tortilla，别太赶也别太撑。</p></div></div>
+            <div class="timeline-item"><div class="timeline-time">16:00</div><div><h4>前往机场</h4><p>国际返程建议至少提前 3 小时到达，退税和安检都会比较耗时。</p></div></div>
+          </div>
+          <div class="photo-tips"><h5>今日拍照建议</h5><ul><li>买伴手礼时可以拍“桌面静物照”，很适合旅程总结。</li><li>机场值机前拍一张护照、机票和购物袋照片，做结尾很完整。</li><li>旅程最后一张推荐在机场落地窗前拍背影。</li></ul></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-blue" id="food">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <div class="section-tag">Food</div>
+        <h2 class="section-title">西班牙特色美食 <em>吃什么不踩雷</em></h2>
+        <p class="section-sub">这条路线里不只看建筑，也要把西班牙餐桌上最经典的味道尝一遍。</p>
+      </div>
+
+      <div class="food-grid">
+        <div class="food-card featured reveal">
+          <div class="food-head"><div class="food-emoji">🥘</div><div><h3>海鲜饭 Paella</h3><p>想吃经典海鲜饭，尽量在巴塞罗那或海边地区安排。锅底焦香、米粒吸足海鲜汤汁，是最有“度假感”的西班牙主食。建议两人拼一份更合适，单人也能点小份午市套餐。</p></div></div>
+          <div class="meta-list"><span class="meta">推荐城市：巴塞罗那</span><span class="meta">参考价格：€16-24</span><span class="meta">最佳时段：午餐</span></div>
+        </div>
+        <div class="food-card reveal"><div class="food-head"><div class="food-emoji">🍤</div><div><h3>蒜香虾 Gambas al ajillo</h3><p>小陶锅里滚烫上桌，橄榄油、蒜片和虾的香味非常直接，是 tapas 中几乎不会出错的一道。</p></div></div><div class="meta-list"><span class="meta">€8-12</span><span class="meta">适合配面包</span></div></div>
+        <div class="food-card reveal"><div class="food-head"><div class="food-emoji">🥔</div><div><h3>土豆蛋饼 Tortilla</h3><p>最日常的西班牙国民小吃，厚切更香，适合早餐、早午餐或晚间小食。</p></div></div><div class="meta-list"><span class="meta">€4-7</span><span class="meta">早餐友好</span></div></div>
+        <div class="food-card reveal"><div class="food-head"><div class="food-emoji">🍖</div><div><h3>伊比利亚火腿 Jamón</h3><p>西班牙代表性风味，越高等级越香。可在市场买真空小包装带回国。</p></div></div><div class="meta-list"><span class="meta">€9-18</span><span class="meta">伴手礼首选</span></div></div>
+        <div class="food-card reveal"><div class="food-head"><div class="food-emoji">🍫</div><div><h3>Churros + 热巧克力</h3><p>外脆内软，蘸浓厚热巧克力很治愈，尤其适合马德里早晨或雨天。</p></div></div><div class="meta-list"><span class="meta">€4-8</span><span class="meta">San Ginés 必打卡</span></div></div>
+        <div class="food-card reveal"><div class="food-head"><div class="food-emoji">🧀</div><div><h3>Croquetas 可乐饼</h3><p>奶香和火腿馅最经典，酒吧里很常见，点 tapas 时建议加一份。</p></div></div><div class="meta-list"><span class="meta">€6-10</span><span class="meta">酒吧常见</span></div></div>
+        <div class="food-card reveal"><div class="food-head"><div class="food-emoji">🥪</div><div><h3>Bocadillo 三明治</h3><p>适合赶景点时快速补给，火腿、金枪鱼和 tortilla 夹面包都很好吃。</p></div></div><div class="meta-list"><span class="meta">€4-8</span><span class="meta">省预算神器</span></div></div>
+        <div class="food-card reveal"><div class="food-head"><div class="food-emoji">🍷</div><div><h3>Sangria / Tinto de verano</h3><p>清爽果香型酒饮，适合海边或夜晚 tapas 氛围，但别空腹喝。</p></div></div><div class="meta-list"><span class="meta">€4-8/杯</span><span class="meta">傍晚最佳</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-paper" id="spots">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <div class="section-tag">Photo Spots</div>
+        <h2 class="section-title">西班牙拍照点位 <em>细到机位</em></h2>
+        <p class="section-sub">不仅告诉你去哪儿，还告诉你什么时间拍、怎么站位更容易拍出旅行大片。</p>
+      </div>
+
+      <div class="photo-grid">
+        <div class="photo-card reveal"><div class="photo-emoji">🏛️</div><h3>马德里皇宫前广场</h3><p>站在广场低机位，把皇宫完整收入画面；若穿纯色风衣，非常有欧洲电影海报感。</p><div class="meta-list"><span class="meta">最佳时间：上午 10 点前</span><span class="meta">推荐镜头：24-35mm</span></div></div>
+        <div class="photo-card reveal"><div class="photo-emoji">🌳</div><h3>丽池公园水晶宫</h3><p>利用玻璃宫和湖水倒影拍半身照，逆光时画面会特别柔和，适合氛围感人像。</p><div class="meta-list"><span class="meta">最佳时间：16:30-18:00</span><span class="meta">适合春夏</span></div></div>
+        <div class="photo-card reveal"><div class="photo-emoji">⛪</div><h3>托莱多 Mirador del Valle</h3><p>俯瞰古城全景的封神机位，适合拍城市大全景，也适合拿广角拍人物与山城同框。</p><div class="meta-list"><span class="meta">最佳时间：傍晚</span><span class="meta">建议打车前往</span></div></div>
+        <div class="photo-card reveal"><div class="photo-emoji">✨</div><h3>圣家堂内部彩窗</h3><p>拍顶部彩色光束和人物剪影，注意降低曝光，保住玻璃色彩层次，画面会很震撼。</p><div class="meta-list"><span class="meta">最佳时间：上午入场</span><span class="meta">广角优先</span></div></div>
+        <div class="photo-card reveal"><div class="photo-emoji">🌀</div><h3>巴特罗之家对街</h3><p>站在马路对面拍整面波浪立面，等红绿灯车流间隙会更干净，也可以拍夜景灯光版。</p><div class="meta-list"><span class="meta">最佳时间：蓝调时刻</span><span class="meta">50mm 也很好用</span></div></div>
+        <div class="photo-card reveal"><div class="photo-emoji">🧩</div><h3>桂尔公园马赛克长椅</h3><p>从侧前方拍，能同时带到长椅、城市远景和人物，是巴塞罗那最具代表性的彩色画面。</p><div class="meta-list"><span class="meta">最佳时间：开园后 1 小时内</span><span class="meta">建议避开正午</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-gold" id="hotel">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <div class="section-tag">Hotel</div>
+        <h2 class="section-title">住宿建议 <em>住哪儿最顺路</em></h2>
+        <p class="section-sub">预算 10000 元以内的前提下，住宿建议以安全、交通和拍照氛围为优先，不追求过度奢华。</p>
+      </div>
+
+      <div class="hotel-grid">
+        <div class="hotel-card reveal"><div class="hotel-emoji">🏨</div><h3>马德里：Sol / Gran Vía 区</h3><p>第一次来最推荐。可以步行去太阳门、马约尔广场、格兰大道，晚归也相对方便。</p><ul><li>单晚参考：¥420-580</li><li>适合 2 晚停留</li><li>可选精品酒店或连锁酒店</li></ul></div>
+        <div class="hotel-card reveal"><div class="hotel-emoji">🛏️</div><h3>巴塞罗那：Eixample 区</h3><p>街区整洁，离圣家堂、格拉西亚大道很近，地铁方便，夜间整体安全感更好。</p><ul><li>单晚参考：¥480-650</li><li>建议住 3 晚</li><li>首访比哥特区更省心</li></ul></div>
+        <div class="hotel-card reveal"><div class="hotel-emoji">🎒</div><h3>节省预算：青旅 / 公寓</h3><p>若机票偏贵，可以用青年旅舍或公寓型住宿把预算拉回 10000 元内，特别适合单人旅行。</p><ul><li>单晚参考：¥220-360</li><li>厨房可自己做早餐</li><li>需优先看评价和地段</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-paper" id="budget">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <div class="section-tag">Budget</div>
+        <h2 class="section-title">个人预算 <em>10000 元怎么分配</em></h2>
+        <p class="section-sub">以下预算按“淡季提前订票 + 中档住宿 + 不过度购物”估算，适合第一次去西班牙的一周路线。</p>
+      </div>
+
+      <div class="budget-table-wrap reveal">
+        <table>
+          <thead>
+            <tr>
+              <th>类别</th>
+              <th>内容</th>
+              <th>预算</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>国际往返机票</strong></td><td>北京 → 马德里，巴塞罗那 → 北京，建议提早 1-2 个月购买</td><td>¥4,800 - 5,600</td></tr>
+            <tr><td><strong>西班牙境内交通</strong></td><td>马德里往返托莱多 + 马德里到巴塞罗那 AVE 高铁 + 市内地铁公交</td><td>¥650 - 900</td></tr>
+            <tr><td><strong>住宿 6 晚</strong></td><td>马德里 2 晚 + 巴塞罗那 4 晚，按中档酒店或精品民宿估算</td><td>¥2,500 - 3,300</td></tr>
+            <tr><td><strong>景点门票</strong></td><td>皇宫、普拉多、托莱多教堂、圣家堂、桂尔公园、巴特罗之家（二选一可降预算）</td><td>¥900 - 1,300</td></tr>
+            <tr><td><strong>餐饮</strong></td><td>早餐简单 + 午晚餐搭配，含 tapas、海鲜饭、甜品、咖啡</td><td>¥1,000 - 1,400</td></tr>
+            <tr><td><strong>伴手礼 / 退税购物</strong></td><td>火腿、橄榄油、巧克力、明信片、冰箱贴等</td><td>¥300 - 700</td></tr>
+            <tr><td><strong>机动预算</strong></td><td>行李、预约手续费、打车、额外表演或突发开销</td><td>¥300 - 500</td></tr>
+            <tr class="total-row"><td colspan="2">合计</td><td>约 ¥9,800 - 10,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="budget-cards reveal">
+        <div class="budget-card bc1"><span class="label">机票</span><span class="num">56%</span><span class="label">最大头成本</span></div>
+        <div class="budget-card bc2"><span class="label">住宿</span><span class="num">28%</span><span class="label">选对区更省心</span></div>
+        <div class="budget-card bc3"><span class="label">交通</span><span class="num">9%</span><span class="label">AVE 尽早买</span></div>
+        <div class="budget-card bc4"><span class="label">吃喝</span><span class="num">12%</span><span class="label">Tapas 更灵活</span></div>
+        <div class="budget-card bc5"><span class="label">购物</span><span class="num">7%</span><span class="label">留点余量</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-blue" id="tips">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <div class="section-tag">Tips</div>
+        <h2 class="section-title">出行贴士 <em>提前知道更省事</em></h2>
+        <p class="section-sub">把签证、交通、语言、退税和安全点位都提前想清楚，西班牙旅行会顺很多。</p>
+      </div>
+
+      <div class="tips-grid">
+        <div class="tip-card reveal"><div class="tip-emoji">🛂</div><h3>签证与证件</h3><p>需申根签证。护照有效期至少 6 个月，提前准备在职证明、流水、机酒订单等材料。</p></div>
+        <div class="tip-card reveal"><div class="tip-emoji">📱</div><h3>交通与网络</h3><p>城市内地铁足够好用，Google Maps 基本够用。建议买欧洲 eSIM，导航和翻译都方便。</p></div>
+        <div class="tip-card reveal"><div class="tip-emoji">👜</div><h3>防盗意识</h3><p>巴塞罗那游客多，地铁和兰布拉大道尤其要注意手机、相机和随身包，尽量斜挎前背。</p></div>
+        <div class="tip-card reveal"><div class="tip-emoji">🕒</div><h3>作息差异</h3><p>西班牙午饭和晚饭普遍偏晚，很多餐馆晚上 8 点后才真正热闹，别按国内节奏找饭吃。</p></div>
+        <div class="tip-card reveal"><div class="tip-emoji">💸</div><h3>退税与付款</h3><p>大部分店支持刷卡，少量现金即可。购物若需退税，保留发票并在机场预留足够时间。</p></div>
+        <div class="tip-card reveal"><div class="tip-emoji">👗</div><h3>拍照穿搭</h3><p>西班牙建筑和彩砖很适合纯色穿搭。白色、砖红、宝蓝、橄榄绿上镜，避免花色过杂。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="cta-box reveal">
+      <h2>准备好奔向西班牙了吗？</h2>
+      <p>把这份网页直接发给同行人，按天拆解就能上手。<br />第一次去西班牙，也能拍得漂亮、吃得尽兴、预算不失控。</p>
+      <div class="cta-buttons">
+        <a class="cta-btn btn-terracotta" href="#top">回到顶部</a>
+        <a class="cta-btn btn-cobalt" href="#itinerary">查看详细行程</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>© 2026 España Week · 北京出发西班牙 1 周旅行网页</div>
+    <div>建议长期发布到 Netlify / GitHub Pages；当前目录文件可立即通过本地服务与公网临时链接访问。</div>
+  </footer>
+
+  <script>
+    const colors = ['#c65a3a','#f2b544','#235c96','#607744','#d97b7b'];
+    const dotsWrap = document.getElementById('floatingDots');
+    for (let i = 0; i < 28; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      const size = 6 + Math.random() * 12;
+      dot.style.width = size + 'px';
+      dot.style.height = size + 'px';
+      dot.style.left = Math.random() * 100 + 'vw';
+      dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+      dot.style.animationDuration = (12 + Math.random() * 18) + 's';
+      dot.style.animationDelay = (Math.random() * 12) + 's';
+      dotsWrap.appendChild(dot);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

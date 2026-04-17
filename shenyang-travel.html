@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌸 沈阳春游攻略 · 3天2夜 · 两人4000元</title>
+  <style>
+    /* ========== 全局变量 & 重置 ========== */
+    :root {
+      --sakura:    #ffb7c5;
+      --sakura2:   #ff8fab;
+      --petal:     #fce4ec;
+      --leaf:      #a8d8a8;
+      --leaf2:     #57a773;
+      --sun:       #ffd166;
+      --sun2:      #f4a261;
+      --sky:       #c9f0ff;
+      --sky2:      #74c0fc;
+      --cream:     #fffdf7;
+      --warm-text: #5d3a1a;
+      --mid-text:  #7d5a50;
+      --light-text:#b07d6b;
+      --white:     #ffffff;
+      --shadow:    rgba(180,100,100,0.12);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'PingFang SC','Microsoft YaHei','Hiragino Sans GB',sans-serif;
+      background: var(--cream);
+      color: var(--warm-text);
+      overflow-x: hidden;
+    }
+
+    /* ========== 飘落花瓣动画 ========== */
+    .petals-wrap {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      top: -40px;
+      width: 14px;
+      height: 14px;
+      background: var(--sakura);
+      border-radius: 50% 10% 50% 10%;
+      opacity: 0.7;
+      animation: falling linear infinite;
+    }
+
+    @keyframes falling {
+      0%   { transform: translateY(-40px) rotate(0deg) translateX(0); opacity: .8; }
+      50%  { transform: translateY(50vh)  rotate(180deg) translateX(60px); opacity: .6; }
+      100% { transform: translateY(110vh) rotate(360deg) translateX(-40px); opacity: 0; }
+    }
+
+    /* ========== 滚动出现动画 ========== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.show { opacity: 1; transform: none; }
+
+    /* ========== 导航栏 ========== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--sakura);
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--sakura2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--mid-text);
+      font-size: .92rem;
+      font-weight: 600;
+      transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--sakura2); }
+
+    /* ========== 英雄区 Hero ========== */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      background: linear-gradient(160deg, #fff0f5 0%, #ffe8d6 40%, #e8f5e9 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 110px 20px 60px;
+      overflow: hidden;
+    }
+
+    /* 背景装饰圆 */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,183,197,.35) 0%, transparent 70%);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168,216,168,.35) 0%, transparent 70%);
+    }
+
+    .hero-eyebrow {
+      font-size: .82rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--sakura2);
+      background: rgba(255,143,171,.12);
+      border: 1px solid var(--sakura);
+      padding: 6px 20px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+      animation: fadeUp .8s ease both;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      animation: fadeUp .9s .1s ease both;
+    }
+
+    .hero-title .t1 { color: var(--sakura2); }
+    .hero-title .t2 {
+      background: linear-gradient(90deg, var(--sun2), var(--sakura2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      max-width: 600px;
+      font-size: 1.1rem;
+      color: var(--mid-text);
+      line-height: 1.9;
+      margin-bottom: 40px;
+      animation: fadeUp 1s .2s ease both;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 50px;
+      animation: fadeUp 1s .3s ease both;
+    }
+
+    .badge {
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: .95rem;
+    }
+
+    .badge-pink  { background: linear-gradient(135deg, #ff8fab, #ff6b9d); color: #fff; box-shadow: 0 4px 15px rgba(255,107,157,.3); }
+    .badge-green { background: linear-gradient(135deg, #74b9a7, #57a773); color: #fff; box-shadow: 0 4px 15px rgba(87,167,115,.3); }
+    .badge-sun   { background: linear-gradient(135deg, #ffd166, #f4a261); color: #fff; box-shadow: 0 4px 15px rgba(244,162,97,.3); }
+
+    /* 统计栏 */
+    .hero-stats {
+      display: flex;
+      gap: 50px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 1s .4s ease both;
+    }
+
+    .stat {
+      text-align: center;
+      background: rgba(255,255,255,.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,183,197,.4);
+      border-radius: 16px;
+      padding: 20px 30px;
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+
+    .stat-val {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--sakura2);
+    }
+
+    .stat-lbl {
+      font-size: .78rem;
+      letter-spacing: 1.5px;
+      color: var(--light-text);
+      margin-top: 4px;
+    }
+
+    /* 滚动提示箭头 */
+    .scroll-hint {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--sakura2);
+      font-size: .8rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+    @keyframes fadeUp  { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:none} }
+
+    /* ========== 通用区块 ========== */
+    .section { position: relative; z-index: 1; }
+
+    .section-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 90px 30px;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: .75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--leaf2);
+      background: rgba(168,216,168,.18);
+      border: 1px solid var(--leaf);
+      padding: 5px 16px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(1.7rem, 4vw, 2.8rem);
+      font-weight: 800;
+      color: var(--warm-text);
+      line-height: 1.2;
+    }
+
+    .section-title em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--sakura2), var(--sun2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-sub {
+      margin-top: 14px;
+      color: var(--light-text);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    /* ========== 行程区块背景交替 ========== */
+    .bg-white  { background: #fff; }
+    .bg-cream  { background: #fff8f2; }
+    .bg-pink   { background: linear-gradient(180deg,#fff0f5 0%,#fff 100%); }
+    .bg-green  { background: linear-gradient(180deg,#f0faf2 0%,#fff 100%); }
+
+    /* ========== 响应式 ========== */
+    /* ========== 行程概览卡片 ========== */
+    .ov-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .ov-card {
+      border-radius: 20px;
+      padding: 32px 26px;
+      color: #fff;
+      box-shadow: 0 8px 30px rgba(0,0,0,.12);
+      transition: transform .3s;
+    }
+
+    .ov-card:hover { transform: translateY(-6px); }
+
+    .ov-d1 { background: linear-gradient(135deg, #ff8fab 0%, #ff6b9d 100%); }
+    .ov-d2 { background: linear-gradient(135deg, #74b9a7 0%, #57a773 100%); }
+    .ov-d3 { background: linear-gradient(135deg, #ffd166 0%, #f4a261 100%); }
+
+    .ov-day {
+      font-size: .72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.25);
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+    }
+
+    .ov-icon { font-size: 2.8rem; margin-bottom: 10px; }
+
+    .ov-card h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .ov-card ul { list-style: none; }
+
+    .ov-card li {
+      padding: 6px 0;
+      font-size: .92rem;
+      opacity: .95;
+      border-bottom: 1px solid rgba(255,255,255,.2);
+    }
+
+    .ov-card li:last-child { border-bottom: none; }
+
+    .ov-cost {
+      margin-top: 18px;
+      font-size: .82rem;
+      background: rgba(255,255,255,.2);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    /* ========== 时间轴 ========== */
+    .tl-wrap {
+      position: relative;
+      padding-left: 100px;
+    }
+
+    .tl-wrap::before {
+      content: '';
+      position: absolute;
+      left: 40px;
+      top: 20px;
+      bottom: 20px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--sakura), var(--leaf), var(--sun));
+      opacity: .5;
+      border-radius: 2px;
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 36px;
+    }
+
+    .tl-time {
+      position: absolute;
+      left: -88px;
+      top: 20px;
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--sakura2);
+      white-space: nowrap;
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: -53px;
+      top: 22px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px var(--sakura);
+      background: var(--sakura);
+      z-index: 2;
+    }
+
+    .tl-dot-green { background: var(--leaf2); box-shadow: 0 0 0 2px var(--leaf2); }
+    .tl-dot-sun   { background: var(--sun2);  box-shadow: 0 0 0 2px var(--sun2); }
+
+    .tl-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px 28px;
+      box-shadow: 0 4px 20px var(--shadow);
+      border-left: 4px solid var(--sakura);
+      transition: box-shadow .3s, transform .3s;
+    }
+
+    .tl-card:hover {
+      box-shadow: 0 8px 32px rgba(255,143,171,.18);
+      transform: translateX(4px);
+    }
+
+    .tl-card-featured {
+      border-left-color: var(--sakura2);
+      background: linear-gradient(135deg, #fff0f5 0%, #fff 60%);
+    }
+
+    .tl-featured-label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--sakura2);
+      background: rgba(255,143,171,.12);
+      border: 1px solid rgba(255,143,171,.3);
+      padding: 4px 12px;
+      border-radius: 50px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .tl-card-hd {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .tl-ico { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+
+    .tl-card-hd h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--warm-text);
+      line-height: 1.3;
+    }
+
+    .tl-tag {
+      display: inline-block;
+      font-size: .7rem;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-weight: 600;
+      margin-top: 5px;
+    }
+
+    .tl-tag-pink  { background: rgba(255,143,171,.15); color: var(--sakura2); }
+    .tl-tag-green { background: rgba(87,167,115,.15);  color: var(--leaf2); }
+    .tl-tag-sun   { background: rgba(244,162,97,.15);  color: var(--sun2); }
+    .tl-tag-blue  { background: rgba(116,192,252,.15); color: #4a90d9; }
+
+    .tl-body p {
+      color: var(--mid-text);
+      line-height: 1.8;
+      font-size: .95rem;
+      margin-bottom: 12px;
+    }
+
+    .tl-tips {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      background: #fafafa;
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .tl-tip {
+      font-size: .86rem;
+      color: var(--mid-text);
+      line-height: 1.6;
+    }
+
+    /* 小吃网格 */
+    .snack-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .snack-item {
+      background: #fdf5f8;
+      border: 1px solid rgba(255,183,197,.4);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: .82rem;
+    }
+
+    .si-icon { font-size: 1.3rem; display: block; margin-bottom: 4px; }
+    .si-name { font-weight: 700; color: var(--warm-text); display: block; }
+    .si-price { color: var(--sakura2); font-weight: 700; font-size: .8rem; display: block; }
+    .si-note { color: var(--light-text); font-size: .76rem; margin-top: 2px; display: block; }
+
+    /* POI 详情 */
+    .poi-detail {
+      background: #f7fdf9;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .poi-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .88rem;
+      color: var(--mid-text);
+      line-height: 1.6;
+    }
+
+    .poi-icon { flex-shrink: 0; font-size: 1rem; }
+
+    /* 洗浴中心专区 */
+    .spa-card {
+      background: linear-gradient(135deg, #fff0f5 0%, #ffe8d6 100%);
+      border: 2px solid var(--sakura);
+      border-radius: 14px;
+      margin: 14px 0;
+      overflow: hidden;
+    }
+
+    .spa-header {
+      background: linear-gradient(135deg, var(--sakura2), var(--sun2));
+      color: #fff;
+      font-weight: 800;
+      padding: 10px 16px;
+      font-size: .95rem;
+    }
+
+    .spa-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 14px 16px;
+    }
+
+    .spa-item {
+      font-size: .86rem;
+      color: var(--mid-text);
+    }
+
+    .spa-features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .spa-feat {
+      background: #fdf5f8;
+      border: 1px solid rgba(255,183,197,.4);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: .86rem;
+      color: var(--mid-text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .spa-feat span { font-size: 1.2rem; }
+
+    /* 特产网格 */
+    .souvenir-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .sv-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: #fdf5f8;
+      border-radius: 12px;
+      padding: 14px;
+      border: 1px solid rgba(255,183,197,.3);
+    }
+
+    .sv-icon { font-size: 2.2rem; flex-shrink: 0; }
+
+    .sv-item strong { display: block; color: var(--warm-text); font-size: .95rem; margin-bottom: 4px; }
+    .sv-item p { font-size: .82rem; color: var(--mid-text); line-height: 1.6; margin: 0; }
+    .sv-item em { font-style: normal; color: var(--sakura2); font-weight: 700; font-size: .82rem; display: block; margin-top: 4px; }
+
+    /* ========== 美食卡片 ========== */
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .food-card {
+      background: #fff;
+      border: 1px solid rgba(255,183,197,.3);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      box-shadow: 0 3px 16px var(--shadow);
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .food-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(255,143,171,.15);
+    }
+
+    .fc-hero {
+      grid-column: span 2;
+      background: linear-gradient(135deg, #fff0f5 0%, #fff 70%);
+      border-color: var(--sakura);
+    }
+
+    .fc-emoji { font-size: 2.8rem; flex-shrink: 0; }
+
+    .fc-content { flex: 1; }
+
+    .fc-badge {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 50px;
+      background: linear-gradient(135deg, var(--sakura2), var(--sun2));
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .fc-badge-green { background: linear-gradient(135deg, var(--leaf2), #74b9a7); }
+    .fc-badge-sun   { background: linear-gradient(135deg, var(--sun2), var(--sun)); color: var(--warm-text); }
+
+    .fc-content h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--warm-text);
+      margin-bottom: 8px;
+    }
+
+    .fc-content p {
+      font-size: .88rem;
+      color: var(--mid-text);
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+
+    .fc-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .fc-info span {
+      font-size: .78rem;
+      color: var(--light-text);
+      background: #fdf5f8;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    /* ========== 预算表 ========== */
+    .budget-tbl {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px var(--shadow);
+      font-size: .92rem;
+    }
+
+    .budget-tbl th {
+      background: linear-gradient(135deg, var(--sakura2), var(--sun2));
+      color: #fff;
+      padding: 14px 18px;
+      text-align: left;
+      font-size: .9rem;
+    }
+
+    .budget-tbl td {
+      padding: 12px 18px;
+      border-bottom: 1px solid rgba(255,183,197,.2);
+      color: var(--mid-text);
+    }
+
+    .cat-cell {
+      font-weight: 700;
+      color: var(--warm-text) !important;
+      background: rgba(255,183,197,.07);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .tr-transport td:last-child { color: #4a90d9; font-weight: 700; }
+    .tr-hotel     td:last-child { color: var(--leaf2); font-weight: 700; }
+    .tr-food      td:last-child { color: var(--sakura2); font-weight: 700; }
+    .tr-spa       td:last-child { color: var(--sun2); font-weight: 700; }
+    .tr-ticket    td:last-child { color: #9b59b6; font-weight: 700; }
+    .merged { color: var(--light-text) !important; font-size: .8rem; }
+
+    .tr-total td {
+      background: linear-gradient(135deg, rgba(255,143,171,.15), rgba(244,162,97,.15));
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: var(--sakura2) !important;
+    }
+
+    .budget-summary {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .bs-card {
+      border-radius: 14px;
+      padding: 18px 12px;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(0,0,0,.1);
+    }
+
+    .bs-transport { background: linear-gradient(135deg, #74c0fc, #4a90d9); }
+    .bs-hotel     { background: linear-gradient(135deg, #74b9a7, #57a773); }
+    .bs-food      { background: linear-gradient(135deg, #ff8fab, #ff6b9d); }
+    .bs-spa       { background: linear-gradient(135deg, #ffd166, #f4a261); }
+    .bs-ticket    { background: linear-gradient(135deg, #c39bd3, #9b59b6); }
+    .bs-other     { background: linear-gradient(135deg, #f8b4b4, #e74c3c); }
+
+    .bs-icon  { font-size: 1.6rem; }
+    .bs-label { font-size: .72rem; opacity: .9; margin: 4px 0; }
+    .bs-val   { font-size: 1.1rem; font-weight: 800; }
+    .bs-pct   { font-size: .7rem; opacity: .8; }
+
+    /* ========== 贴士卡片 ========== */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .tip-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px 24px;
+      box-shadow: 0 4px 18px var(--shadow);
+      border-top: 4px solid var(--sakura);
+      transition: transform .3s;
+    }
+
+    .tip-card:hover { transform: translateY(-4px); }
+
+    .tip-icon { font-size: 2.2rem; margin-bottom: 12px; }
+
+    .tip-card h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--warm-text);
+      margin-bottom: 14px;
+    }
+
+    .tip-card ul { list-style: none; }
+
+    .tip-card li {
+      font-size: .88rem;
+      color: var(--mid-text);
+      padding: 7px 0;
+      border-bottom: 1px dashed rgba(255,183,197,.4);
+      position: relative;
+      padding-left: 18px;
+      line-height: 1.6;
+    }
+
+    .tip-card li:last-child { border-bottom: none; }
+
+    .tip-card li::before {
+      content: '🌸';
+      position: absolute;
+      left: 0;
+      font-size: .8rem;
+      top: 8px;
+    }
+
+    /* ========== CTA ========== */
+    .cta-section {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(135deg, #fff0f5 0%, #ffe8d6 50%, #f0faf2 100%);
+      text-align: center;
+      padding: 100px 30px;
+      border-top: 2px solid var(--sakura);
+    }
+
+    .cta-inner { max-width: 700px; margin: 0 auto; }
+
+    .cta-flowers {
+      font-size: 1.8rem;
+      letter-spacing: 4px;
+      margin-bottom: 24px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+    .cta-section h2 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900;
+      color: var(--warm-text);
+      margin-bottom: 16px;
+    }
+
+    .cta-section p {
+      color: var(--mid-text);
+      font-size: 1.1rem;
+      line-height: 1.9;
+      margin-bottom: 36px;
+    }
+
+    .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    .cta-btn {
+      padding: 14px 36px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: .95rem;
+      text-decoration: none;
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .cta-btn:hover { transform: translateY(-3px); }
+
+    .cta-btn-pink {
+      background: linear-gradient(135deg, var(--sakura2), #ff6b9d);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(255,107,157,.3);
+    }
+
+    .cta-btn-green {
+      background: linear-gradient(135deg, var(--leaf2), #74b9a7);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(87,167,115,.3);
+    }
+
+    /* ========== 页脚 ========== */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--warm-text);
+      color: rgba(255,255,255,.8);
+      text-align: center;
+      padding: 36px 20px;
+      font-size: .9rem;
+    }
+
+    .footer-flowers { font-size: 1.4rem; letter-spacing: 4px; margin-bottom: 12px; }
+
+    @media (max-width: 768px) {
+      nav { padding: 12px 18px; }
+      .nav-links { display: none; }
+      .section-inner { padding: 60px 18px; }
+      .hero-stats { gap: 14px; }
+      .ov-grid { grid-template-columns: 1fr; }
+      .tl-wrap { padding-left: 60px; }
+      .tl-wrap::before { left: 20px; }
+      .tl-time { left: -56px; font-size: .72rem; }
+      .tl-dot  { left: -33px; }
+      .snack-grid { grid-template-columns: 1fr 1fr; }
+      .spa-features { grid-template-columns: 1fr 1fr; }
+      .souvenir-grid { grid-template-columns: 1fr; }
+      .food-grid { grid-template-columns: 1fr; }
+      .fc-hero { grid-column: span 1; }
+      .budget-summary { grid-template-columns: repeat(3, 1fr); }
+      .tips-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 飘落花瓣 -->
+<div class="petals-wrap" id="petals"></div>
+
+<!-- 导航 -->
+<nav>
+  <div class="nav-brand">🌸 沈阳春游</div>
+  <ul class="nav-links">
+    <li><a href="#overview">概览</a></li>
+    <li><a href="#day1">Day 1</a></li>
+    <li><a href="#day2">Day 2</a></li>
+    <li><a href="#day3">Day 3</a></li>
+    <li><a href="#food">美食</a></li>
+    <li><a href="#spa">洗浴</a></li>
+    <li><a href="#budget">预算</a></li>
+    <li><a href="#tips">贴士</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="hero-eyebrow">🌸 春暖花开 · 东北之旅 🌸</div>
+  <h1 class="hero-title">
+    <div class="t1">沈阳春游攻略</div>
+    <div class="t2">3天2夜 · 春暖花开</div>
+  </h1>
+  <p class="hero-desc">
+    从北京出发，踏上这片充满东北韵味的土地——<br>
+    烤鸡架的焦香、锅包肉的酸甜、自助榴莲的甜蜜，<br>
+    还有沉浸式的温泉汗蒸，春日里最治愈的旅程。
+  </p>
+  <div class="hero-badges">
+    <span class="badge badge-pink">🚄 北京出发</span>
+    <span class="badge badge-green">🍗 烤鸡架 &amp; 锅包肉</span>
+    <span class="badge badge-sun">🍈 榴莲洗浴中心</span>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-val">3</div>
+      <div class="stat-lbl">天数</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">12+</div>
+      <div class="stat-lbl">必吃美食</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">6+</div>
+      <div class="stat-lbl">景点&体验</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">10+</div>
+      <div class="stat-lbl">特色美食</div>
+    </div>
+  </div>
+  <div class="scroll-hint">向下滚动 ↓</div>
+</section>
+
+<!-- ========== 行程概览 ========== -->
+<section class="section bg-pink" id="overview">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-tag">🗓 OVERVIEW</div>
+      <h2 class="section-title">三天行程<em>一览</em></h2>
+      <p class="section-sub">北京出发，每一天都安排满满，性价比拉满！</p>
+    </div>
+
+    <div class="ov-grid reveal">
+      <div class="ov-card ov-d1">
+        <div class="ov-day">Day 1</div>
+        <div class="ov-icon">🚄</div>
+        <h3>抵达·美食探索</h3>
+        <ul>
+          <li>🚄 北京出发，高铁直达</li>
+          <li>🥘 老边饺子馆：正宗锅包肉</li>
+          <li>🍦 中街步行街：冰点小吃</li>
+          <li>🍗 烤鸡架盛宴（必吃！）</li>
+          <li>🌃 中街夜景漫步</li>
+        </ul>
+        <div class="ov-cost">餐饮约 ¥380</div>
+      </div>
+
+      <div class="ov-card ov-d2">
+        <div class="ov-day">Day 2</div>
+        <div class="ov-icon">🏰</div>
+        <h3>古迹·泡澡·榴莲</h3>
+        <ul>
+          <li>🏰 沈阳故宫（世界文化遗产）</li>
+          <li>🏛 张氏帅府（民国历史）</li>
+          <li>🍜 西塔韩国街午餐</li>
+          <li>🌿 北陵公园赏春花</li>
+          <li>🏖 榴莲洗浴中心（重头戏！）</li>
+        </ul>
+        <div class="ov-cost">门票+洗浴约 ¥720</div>
+      </div>
+
+      <div class="ov-card ov-d3">
+        <div class="ov-day">Day 3</div>
+        <div class="ov-icon">🎁</div>
+        <h3>早市·特产·返京</h3>
+        <ul>
+          <li>🌅 北市早市（当地人的早餐）</li>
+          <li>🥟 老四季抻面</li>
+          <li>🛍 中街买特产伴手礼</li>
+          <li>🍗 临别再吃烤鸡架</li>
+          <li>🚄 高铁返回北京</li>
+        </ul>
+        <div class="ov-cost">特产+餐饮约 ¥360</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Day 1 ========== -->
+<section class="section bg-white" id="day1">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-tag">📅 DAY 1</div>
+      <h2 class="section-title">抵达沈阳 · <em>美食初探</em></h2>
+      <p class="section-sub">离开北京的繁华，拥抱东北的热情与美食</p>
+    </div>
+
+    <div class="tl-wrap">
+
+      <div class="tl-item reveal">
+        <div class="tl-time">08:00</div>
+        <div class="tl-dot tl-dot-pink"></div>
+        <div class="tl-card">
+          <div class="tl-card-hd">
+            <span class="tl-ico">🚄</span>
+            <div>
+              <h4>北京出发 · 高铁直达沈阳</h4>
+              <span class="tl-tag tl-tag-blue">交通</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>乘坐高铁从<strong>北京站 / 北京南站</strong>出发，全程约 <strong>3.5 小时</strong>，一路坐享春光，抵达沈阳站或沈阳北站。</p>
+            <div class="tl-tips">
+              <div class="tl-tip">🎫 推荐车次：G381 / G223 / G8025</div>
+              <div class="tl-tip">💰 票价约 <strong>300元/人</strong>，提前15天购票可享优惠</div>
+              <div class="tl-tip">📱 12306 App 或去哪儿购票更方便</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">12:00</div>
+        <div class="tl-dot tl-dot-green"></div>
+        <div class="tl-card">
+          <div class="tl-card-hd">
+            <span class="tl-ico">🏨</span>
+            <div>
+              <h4>入住酒店 · 安顿行李</h4>
+              <span class="tl-tag tl-tag-green">住宿</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>推荐入住<strong>中街 / 太原街</strong>商圈附近经济型连锁酒店，交通便利，步行可达各大景点与美食街。</p>
+            <div class="tl-tips">
+              <div class="tl-tip">🏨 推荐：如家精选、汉庭优佳、7天优品</div>
+              <div class="tl-tip">💰 约 <strong>150～200元/晚</strong>，2晚共 ¥400</div>
+              <div class="tl-tip">📍 选地铁口附近，出行最省力</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">13:00</div>
+        <div class="tl-dot tl-dot-pink"></div>
+        <div class="tl-card tl-card-featured">
+          <div class="tl-featured-label">🌟 今日重头戏 · 必吃</div>
+          <div class="tl-card-hd">
+            <span class="tl-ico">🥘</span>
+            <div>
+              <h4>午餐 · 老边饺子馆 · 正宗锅包肉</h4>
+              <span class="tl-tag tl-tag-pink">美食</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p><strong>老边饺子馆</strong>是沈阳的百年老字号（始建于1829年），锅包肉采用正宗酸甜口做法——外酥里嫩，裹着透亮薄芡，入口瞬间唤醒味蕾！</p>
+            <div class="tl-tips">
+              <div class="tl-tip">🍽 必点：锅包肉、冰花煎饺、三鲜蒸饺、熘肉段</div>
+              <div class="tl-tip">💰 人均约 <strong>70～90元</strong>，两人约 ¥160</div>
+              <div class="tl-tip">⏰ 饭点排队，建议12点前到</div>
+              <div class="tl-tip">📍 沈河区中街附近多家分店</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">14:30</div>
+        <div class="tl-dot tl-dot-sun"></div>
+        <div class="tl-card">
+          <div class="tl-card-hd">
+            <span class="tl-ico">🍦</span>
+            <div>
+              <h4>中街步行街 · 小吃大扫荡</h4>
+              <span class="tl-tag tl-tag-sun">逛吃</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>沈阳最繁华的步行街，汇聚了各类经典小吃，一路边走边吃，下午茶时光怎么都不够！</p>
+            <div class="snack-grid">
+              <div class="snack-item">
+                <span class="si-icon">🍦</span>
+                <span class="si-name">中街冰点</span>
+                <span class="si-price">¥8～15</span>
+                <span class="si-note">60年老字号，沈阳冰淇淋之王</span>
+              </div>
+              <div class="snack-item">
+                <span class="si-icon">🥟</span>
+                <span class="si-name">马家烧麦</span>
+                <span class="si-price">¥28～35</span>
+                <span class="si-note">皮薄肉嫩，汤汁饱满</span>
+              </div>
+              <div class="snack-item">
+                <span class="si-icon">🥩</span>
+                <span class="si-name">李连贵熏肉大饼</span>
+                <span class="si-price">¥20～28</span>
+                <span class="si-note">百年老店，咸香耐嚼</span>
+              </div>
+              <div class="snack-item">
+                <span class="si-icon">🍡</span>
+                <span class="si-name">糖葫芦 / 驴打滚</span>
+                <span class="si-price">¥5～12</span>
+                <span class="si-note">酸甜爽口，拍照出片</span>
+              </div>
+              <div class="snack-item">
+                <span class="si-icon">🫔</span>
+                <span class="si-name">煎饼果子</span>
+                <span class="si-price">¥12～18</span>
+                <span class="si-note">现做现卖，热乎解馋</span>
+              </div>
+              <div class="snack-item">
+                <span class="si-icon">🧃</span>
+                <span class="si-name">鲜榨果汁/奶茶</span>
+                <span class="si-price">¥15～25</span>
+                <span class="si-note">配小吃最搭</span>
+              </div>
+            </div>
+            <div class="tl-tips" style="margin-top:14px">
+              <div class="tl-tip">💰 小吃预算约 <strong>¥100（两人）</strong></div>
+              <div class="tl-tip">📸 中街牌楼是打卡地标，别错过</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">18:00</div>
+        <div class="tl-dot tl-dot-pink"></div>
+        <div class="tl-card tl-card-featured">
+          <div class="tl-featured-label">🌟 今日压轴 · 沈阳夜宵之王</div>
+          <div class="tl-card-hd">
+            <span class="tl-ico">🍗</span>
+            <div>
+              <h4>晚餐 · 烤鸡架 + 烧烤摊</h4>
+              <span class="tl-tag tl-tag-pink">必吃</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>烤鸡架是沈阳人刻在 DNA 里的夜宵！铁架子上烤得焦黄冒油，撒上孜然辣椒，外皮焦脆咸香、骨肉之间嫩得出汁，配一瓶冰镇啤酒，人生巅峰！</p>
+            <div class="tl-tips">
+              <div class="tl-tip">🏪 推荐：<strong>董家烤鸡架</strong>（几十年老店）、小北街烤鸡架摊</div>
+              <div class="tl-tip">🍽 套餐搭配：烤鸡架 × 2 + 烤串若干 + 毛豆 + 冰啤各一</div>
+              <div class="tl-tip">💰 两人约 <strong>¥110～130</strong></div>
+              <div class="tl-tip">⏰ 晚上18:00 开摊，越夜越热闹</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">20:30</div>
+        <div class="tl-dot tl-dot-green"></div>
+        <div class="tl-card">
+          <div class="tl-card-hd">
+            <span class="tl-ico">🌃</span>
+            <div>
+              <h4>中街夜景 + 故宫外围打卡</h4>
+              <span class="tl-tag tl-tag-green">休闲</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>饭后散步消食，沈阳故宫夜晚灯光亮起别有韵味，中街商圈霓虹闪烁，随手一拍都是大片。</p>
+            <div class="tl-tips">
+              <div class="tl-tip">📸 沈阳故宫正门夜景打卡必打</div>
+              <div class="tl-tip">🌸 春天有晚间赏花灯活动，运气好遇上更美</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tl-wrap -->
+  </div>
+</section>
+
+<!-- ========== Day 2 ========== -->
+<section class="section bg-cream" id="day2">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-tag">📅 DAY 2</div>
+      <h2 class="section-title">古迹赏春 · <em>榴莲洗浴</em></h2>
+      <p class="section-sub">走进清朝皇宫，民国帅府，再泡进榴莲的甜蜜里</p>
+    </div>
+
+    <div class="tl-wrap">
+
+      <div class="tl-item reveal">
+        <div class="tl-time">08:30</div>
+        <div class="tl-dot tl-dot-sun"></div>
+        <div class="tl-card">
+          <div class="tl-card-hd">
+            <span class="tl-ico">🌅</span>
+            <div>
+              <h4>酒店早餐 / 附近早点</h4>
+              <span class="tl-tag tl-tag-sun">早餐</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>就近解决早餐，推荐附近早点摊或面馆，给一天的游览蓄满能量。</p>
+            <div class="tl-tips">
+              <div class="tl-tip">🍜 抻面 + 小菜，两人约 ¥30～40</div>
+              <div class="tl-tip">🥐 酒店含早更省心，提前问清楚</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">09:30</div>
+        <div class="tl-dot tl-dot-pink"></div>
+        <div class="tl-card tl-card-featured">
+          <div class="tl-featured-label">🏆 世界文化遗产</div>
+          <div class="tl-card-hd">
+            <span class="tl-ico">🏰</span>
+            <div>
+              <h4>沈阳故宫（盛京皇宫）</h4>
+              <span class="tl-tag tl-tag-pink">景点</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>中国仅存的两大宫殿建筑群之一！清太祖努尔哈赤、太宗皇太极在此建立基业，入关前的雄心壮志都凝固在这片红墙黄瓦之间。春天里梨花、玉兰次第盛开，古建与春花交相辉映，每一帧都是画。</p>
+            <div class="poi-detail">
+              <div class="poi-row"><span class="poi-icon">💰</span><span>门票：<strong>50元/人</strong>，两人共 ¥100</span></div>
+              <div class="poi-row"><span class="poi-icon">⏰</span><span>游览时长：约 2～2.5 小时</span></div>
+              <div class="poi-row"><span class="poi-icon">🎧</span><span>建议租语音导览（10元），大大提升体验</span></div>
+              <div class="poi-row"><span class="poi-icon">📸</span><span>大政殿、崇政殿、凤凰楼是最佳拍摄点</span></div>
+              <div class="poi-row"><span class="poi-icon">🌸</span><span>春季广场内玉兰花盛开，美到窒息</span></div>
+              <div class="poi-row"><span class="poi-icon">🎟</span><span>提前在故宫微信公众号预约，省去排队</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">12:00</div>
+        <div class="tl-dot tl-dot-green"></div>
+        <div class="tl-card">
+          <div class="tl-card-hd">
+            <span class="tl-ico">🍜</span>
+            <div>
+              <h4>午餐 · 西塔韩国街</h4>
+              <span class="tl-tag tl-tag-green">美食</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p><strong>西塔街</strong>是沈阳朝鲜族的聚居地，充满异域风情，韩式烤肉、冷面、石锅拌饭、打糕应有尽有，性价比极高，连本地人也常来这边解馋！</p>
+            <div class="tl-tips">
+              <div class="tl-tip">🍖 必吃：韩式五花肉烤肉 + 朝鲜冷面 + 石锅拌饭</div>
+              <div class="tl-tip">🍡 饭后甜点：打糕（类似麻薯）约 ¥15</div>
+              <div class="tl-tip">💰 人均约 <strong>80～100元</strong>，两人 ¥180</div>
+              <div class="tl-tip">📍 和平区西塔街，地铁可达</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">14:00</div>
+        <div class="tl-dot tl-dot-pink"></div>
+        <div class="tl-card tl-card-featured">
+          <div class="tl-featured-label">🏛 民国历史活教材</div>
+          <div class="tl-card-hd">
+            <span class="tl-ico">🏛</span>
+            <div>
+              <h4>张氏帅府（大帅府）</h4>
+              <span class="tl-tag tl-tag-pink">景点</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>张作霖、张学良父子的居所。从"东北王"的大帅府，到少帅的西式楼阁，每一砖一瓦都散发着民国传奇。春天院内丁香花香飘四溢，在历史与花香中穿越百年。</p>
+            <div class="poi-detail">
+              <div class="poi-row"><span class="poi-icon">💰</span><span>门票：<strong>60元/人</strong>，两人共 ¥120</span></div>
+              <div class="poi-row"><span class="poi-icon">⏰</span><span>游览时长：约 1.5～2 小时</span></div>
+              <div class="poi-row"><span class="poi-icon">📸</span><span>大青楼、红楼、小青楼各有特色</span></div>
+              <div class="poi-row"><span class="poi-icon">🌸</span><span>春季丁香花盛开，与民国建筑绝配</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">16:30</div>
+        <div class="tl-dot tl-dot-sun"></div>
+        <div class="tl-card">
+          <div class="tl-card-hd">
+            <span class="tl-ico">☕</span>
+            <div>
+              <h4>下午茶 · 太原街商圈</h4>
+              <span class="tl-tag tl-tag-sun">休闲</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>回到太原街商圈，找一家舒适的咖啡馆或奶茶店歇歇脚，补充能量，为晚上的洗浴大战蓄力！</p>
+            <div class="tl-tips">
+              <div class="tl-tip">☕ 两杯奶茶 / 咖啡约 ¥50～60</div>
+              <div class="tl-tip">🛍 顺道在商圈随手逛逛</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">18:30</div>
+        <div class="tl-dot tl-dot-green"></div>
+        <div class="tl-card">
+          <div class="tl-card-hd">
+            <span class="tl-ico">🍽</span>
+            <div>
+              <h4>晚餐 · 东北特色硬菜</h4>
+              <span class="tl-tag tl-tag-green">美食</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>找一家地道的东北农家菜馆，大碗硬菜吃个够！为待会儿的洗浴垫好肚子（洗浴有自助餐，不要吃太撑）。</p>
+            <div class="tl-tips">
+              <div class="tl-tip">🍲 必点：<strong>锅包肉（再吃一次！）</strong>、小鸡炖蘑菇、猪肉炖粉条、酸菜白肉</div>
+              <div class="tl-tip">💰 人均约 <strong>70～80元</strong>，两人 ¥150</div>
+              <div class="tl-tip">⚠ 不要吃太撑，洗浴有自助水果榴莲</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">20:00</div>
+        <div class="tl-dot tl-dot-pink"></div>
+        <div class="tl-card tl-card-featured" id="spa">
+          <div class="tl-featured-label">🌟🌟 行程最高光时刻</div>
+          <div class="tl-card-hd">
+            <span class="tl-ico">🏖</span>
+            <div>
+              <h4>榴莲洗浴中心 · 自助榴莲畅吃</h4>
+              <span class="tl-tag tl-tag-pink">必去</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>东北洗浴文化举世闻名！沈阳的大型洗浴中心不只是"洗个澡"，而是一整套悠闲享受——温泉池、汗蒸房、冷热池、按摩椅……最亮眼的是<strong>自助餐区常年备有新鲜榴莲</strong>🍈，进了就不想出来！</p>
+
+            <div class="spa-card">
+              <div class="spa-header">🍈 自助榴莲专区</div>
+              <div class="spa-row">
+                <div class="spa-item">✅ 新鲜榴莲（D197/猫山王随季节）</div>
+                <div class="spa-item">✅ 各类热带水果</div>
+                <div class="spa-item">✅ 小吃、点心不限量</div>
+                <div class="spa-item">✅ 饮料、果汁、牛奶</div>
+              </div>
+            </div>
+
+            <div class="spa-features">
+              <div class="spa-feat"><span>♨️</span> 温泉池（多种矿泉）</div>
+              <div class="spa-feat"><span>🔥</span> 汗蒸房（韩式汗蒸）</div>
+              <div class="spa-feat"><span>❄️</span> 冷水池（冰火交替）</div>
+              <div class="spa-feat"><span>💆</span> 按摩池/气泡池</div>
+              <div class="spa-feat"><span>🛁</span> 搓澡服务（另付约¥60）</div>
+              <div class="spa-feat"><span>💤</span> 大厅休息区（可过夜）</div>
+            </div>
+
+            <div class="tl-tips" style="margin-top:16px">
+              <div class="tl-tip">🏪 推荐：<strong>御龙湾洗浴 / 汤泉宫温泉洗浴 / 汗蒸水会</strong></div>
+              <div class="tl-tip">💰 入场费约 <strong>150～200元/人</strong>，两人 ¥400（含自助餐）</div>
+              <div class="tl-tip">⏰ 晚上8点前往最佳，泡到深夜再回酒店</div>
+              <div class="tl-tip">💡 工作日更便宜，有时有打折券</div>
+              <div class="tl-tip">👕 提供洗浴服，只需带换洗内衣</div>
+              <div class="tl-tip">📲 提前在美团/大众点评购票，可省20～50元</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tl-wrap day2 -->
+  </div>
+</section>
+
+<!-- ========== Day 3 ========== -->
+<section class="section bg-pink" id="day3">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-tag">📅 DAY 3</div>
+      <h2 class="section-title">早市漫游 · <em>满载而归</em></h2>
+      <p class="section-sub">带着满口余香和一包特产，踏上回家的列车</p>
+    </div>
+
+    <div class="tl-wrap">
+
+      <div class="tl-item reveal">
+        <div class="tl-time">08:00</div>
+        <div class="tl-dot tl-dot-sun"></div>
+        <div class="tl-card tl-card-featured">
+          <div class="tl-featured-label">🌄 当地人才知道的早市</div>
+          <div class="tl-card-hd">
+            <span class="tl-ico">🌅</span>
+            <div>
+              <h4>北市早市 · 沈阳人的早晨</h4>
+              <span class="tl-tag tl-tag-sun">体验</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>早市是最真实的沈阳日常！各种早点摊热气腾腾，豆腐脑、油条、煎包、卷馅饼……10块钱就能吃得饱饱的，感受沈阳市井烟火气。</p>
+            <div class="tl-tips">
+              <div class="tl-tip">📍 推荐：北市场（皇姑区）、中街早点一条街</div>
+              <div class="tl-tip">🍲 必试：豆腐脑 + 油条、韭菜馅饼</div>
+              <div class="tl-tip">💰 两人早餐约 <strong>¥30～50</strong></div>
+              <div class="tl-tip">⏰ 早市7:00～10:00最热闹</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">09:30</div>
+        <div class="tl-dot tl-dot-green"></div>
+        <div class="tl-card">
+          <div class="tl-card-hd">
+            <span class="tl-ico">🌳</span>
+            <div>
+              <h4>北陵公园（昭陵）赏春</h4>
+              <span class="tl-tag tl-tag-green">景点</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>清太宗皇太极的陵寝，也是沈阳最大的公园。春天里丁香树盛开，花香四溢，古松参天，龙、凤、麒麟石像列道而立，庄重与灵动并存。</p>
+            <div class="poi-detail">
+              <div class="poi-row"><span class="poi-icon">💰</span><span>门票：<strong>50元/人</strong>，两人共 ¥100（春日公园区免费，景区内需票）</span></div>
+              <div class="poi-row"><span class="poi-icon">⏰</span><span>游览时长：约 1.5 小时</span></div>
+              <div class="poi-row"><span class="poi-icon">🌸</span><span>四月底～五月初丁香花大片盛开，是全国闻名的丁香节举办地！</span></div>
+              <div class="poi-row"><span class="poi-icon">📸</span><span>神道两侧石像是最佳拍摄点</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">12:00</div>
+        <div class="tl-dot tl-dot-pink"></div>
+        <div class="tl-card">
+          <div class="tl-card-hd">
+            <span class="tl-ico">🥟</span>
+            <div>
+              <h4>午餐 · 老四季抻面</h4>
+              <span class="tl-tag tl-tag-pink">美食</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>走之前再吃一碗老沈阳抻面！手工现拉，筋道弹牙，汤头鲜浓，配上卤蛋咸菜，朴实无华却令人念念不忘。</p>
+            <div class="tl-tips">
+              <div class="tl-tip">🍜 必点：牛肉抻面 / 番茄鸡蛋抻面</div>
+              <div class="tl-tip">💰 人均约 <strong>¥20～30</strong>，两人约 ¥50</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">13:30</div>
+        <div class="tl-dot tl-dot-sun"></div>
+        <div class="tl-card tl-card-featured">
+          <div class="tl-featured-label">🎁 伴手礼大采购</div>
+          <div class="tl-card-hd">
+            <span class="tl-ico">🛍</span>
+            <div>
+              <h4>中街特产采购</h4>
+              <span class="tl-tag tl-tag-sun">购物</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>回北京前把沈阳特产装满行李箱，送家人、送同事、送自己，每样都承载着这段春游的美好记忆。</p>
+            <div class="souvenir-grid">
+              <div class="sv-item">
+                <span class="sv-icon">🍶</span>
+                <div>
+                  <strong>老龙口白酒</strong>
+                  <p>始建于清康熙年间，380年历史的沈阳名酒</p>
+                  <em>¥50～200/瓶</em>
+                </div>
+              </div>
+              <div class="sv-item">
+                <span class="sv-icon">🍬</span>
+                <div>
+                  <strong>不老林糖</strong>
+                  <p>奶香浓郁，精美礼盒装，送人倍有面</p>
+                  <em>¥30～50/盒</em>
+                </div>
+              </div>
+              <div class="sv-item">
+                <span class="sv-icon">🥒</span>
+                <div>
+                  <strong>真不同酱菜</strong>
+                  <p>百年老字号，酱黄瓜、酱茄子经典款</p>
+                  <em>¥20～40/瓶</em>
+                </div>
+              </div>
+              <div class="sv-item">
+                <span class="sv-icon">🍄</span>
+                <div>
+                  <strong>长白山榛蘑</strong>
+                  <p>小鸡炖蘑菇的灵魂原料，营养丰富</p>
+                  <em>¥50～80/斤</em>
+                </div>
+              </div>
+            </div>
+            <div class="tl-tips" style="margin-top:14px">
+              <div class="tl-tip">💰 特产预算约 <strong>¥150</strong></div>
+              <div class="tl-tip">📦 超市价格比景区便宜，可去万达/沃尔玛购买</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">15:00</div>
+        <div class="tl-dot tl-dot-pink"></div>
+        <div class="tl-card">
+          <div class="tl-card-hd">
+            <span class="tl-ico">🍗</span>
+            <div>
+              <h4>临别！最后一顿烤鸡架</h4>
+              <span class="tl-tag tl-tag-pink">必吃</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>来都来了，不再吃一顿烤鸡架怎么对得起自己？！临行前再烤一架，让这焦香的滋味随着列车一路飘回北京！</p>
+            <div class="tl-tips">
+              <div class="tl-tip">💰 两人约 ¥80～100</div>
+              <div class="tl-tip">⏰ 饭后30分钟出发前往火车站</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">16:30</div>
+        <div class="tl-dot tl-dot-green"></div>
+        <div class="tl-card">
+          <div class="tl-card-hd">
+            <span class="tl-ico">🚄</span>
+            <div>
+              <h4>沈阳站 · 高铁返回北京</h4>
+              <span class="tl-tag tl-tag-green">交通</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>依依惜别，带着满满的美食记忆和一包特产，踏上回京的高铁。约 3.5 小时后抵达北京，结束这段春暖花开的东北之旅！</p>
+            <div class="tl-tips">
+              <div class="tl-tip">🚄 推荐车次：G8028 / G382 / G224，约19:00到达北京</div>
+              <div class="tl-tip">💰 票价约 300元/人，共 ¥600</div>
+              <div class="tl-tip">😌 全程回味，准备下次再来</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tl-wrap day3 -->
+  </div>
+</section>
+
+<!-- ========== 美食专题 ========== -->
+<section class="section bg-white" id="food">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-tag">🍴 FOOD</div>
+      <h2 class="section-title">沈阳<em>美食地图</em></h2>
+      <p class="section-sub">每一口都是东北热情，每一筷都是地道风味</p>
+    </div>
+
+    <div class="food-grid">
+      <div class="food-card fc-hero reveal">
+        <div class="fc-emoji">🍗</div>
+        <div class="fc-content">
+          <div class="fc-badge">NO.1 必吃</div>
+          <h3>烤鸡架</h3>
+          <p>沈阳夜宵之王，铁架上烤得焦黄冒油，孜然辣椒扑鼻，骨肉之间嫩汁横流，配冰啤才是人生巅峰。</p>
+          <div class="fc-info">
+            <span>📍 董家烤鸡架 / 小北街摊</span>
+            <span>💰 两人约 ¥110～130</span>
+            <span>⏰ 18:00 开摊</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card fc-hero reveal">
+        <div class="fc-emoji">🥘</div>
+        <div class="fc-content">
+          <div class="fc-badge fc-badge-green">NO.2 必吃</div>
+          <h3>锅包肉</h3>
+          <p>东北名菜！猪里脊裹薄芡高温炸至金黄，浇酸甜酱汁，入口先酥后嫩，酸甜中带淡淡焦香。</p>
+          <div class="fc-info">
+            <span>📍 老边饺子馆 / 沈阳饭店</span>
+            <span>💰 35～45元/份</span>
+            <span>💡 要吃酸甜口！</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emoji">🥟</div>
+        <div class="fc-content">
+          <h3>老边饺子</h3>
+          <p>始建于1829年，百年老字号。冰花煎饺底部焦脆连片，三鲜蒸饺皮薄汤多，每一口都是沈阳记忆。</p>
+          <div class="fc-info"><span>💰 人均 ¥60～80</span><span>🌟 招牌：冰花煎饺</span></div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emoji">🍜</div>
+        <div class="fc-content">
+          <h3>老四季抻面</h3>
+          <p>手工现拉，筋道弹牙，汤底清鲜，是沈阳人最日常的一碗主食，却让外地人念念不忘。</p>
+          <div class="fc-info"><span>💰 人均 ¥20～30</span><span>🌟 牛肉抻面经典款</span></div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emoji">🍦</div>
+        <div class="fc-content">
+          <h3>中街冰点</h3>
+          <p>1950年代创立，沈阳最具代表性冰淇淋。圆筒入口即化，甜而不腻，是逛中街必打卡的经典。</p>
+          <div class="fc-info"><span>💰 ¥8～15/个</span><span>📍 中街步行街</span></div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emoji">🥩</div>
+        <div class="fc-content">
+          <h3>西塔韩式烤肉</h3>
+          <p>朝鲜族聚居地，炭火五花肉配冷面，鲜嫩多汁，异域风情十足，是沈阳独一无二的饮食体验。</p>
+          <div class="fc-info"><span>💰 人均 ¥80～100</span><span>📍 和平区西塔街</span></div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emoji">🥟</div>
+        <div class="fc-content">
+          <h3>马家烧麦</h3>
+          <p>皮薄如纸、韧性十足，包裹饱满多汁猪肉馅，一口咬下汤汁奔涌，是中街最受欢迎的小吃之一。</p>
+          <div class="fc-info"><span>💰 ¥28～35/笼</span><span>📍 中街步行街</span></div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emoji">🍖</div>
+        <div class="fc-content">
+          <h3>李连贵熏肉大饼</h3>
+          <p>百年老字号，熏肉色泽红亮、咸香软嫩，配酥脆大饼，一口咬下香气四溢，是老沈阳街头味道。</p>
+          <div class="fc-info"><span>💰 ¥20～28/份</span><span>📍 中街 / 北市场</span></div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emoji">🍲</div>
+        <div class="fc-content">
+          <h3>小鸡炖蘑菇</h3>
+          <p>东北炖菜的灵魂之作！散养土鸡配榛蘑慢炖2小时，汤色金黄浓郁，鸡肉酥烂，春季最暖胃的一锅。</p>
+          <div class="fc-info"><span>💰 ¥68～88/锅</span><span>🌟 加粉条更完美</span></div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emoji">🥬</div>
+        <div class="fc-content">
+          <h3>酸菜白肉</h3>
+          <p>酸菜爽脆开胃，五花肉肥而不腻，在微酸汤底里翻滚，配血肠更是绝配，吃完浑身暖和。</p>
+          <div class="fc-info"><span>💰 ¥58～78/锅</span><span>💡 配血肠是绝配</span></div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emoji">🍡</div>
+        <div class="fc-content">
+          <h3>糖葫芦 / 驴打滚</h3>
+          <p>红彤彤的糖葫芦晶莹透亮，咬下去先甜后酸；驴打滚糯米裹黄豆粉，香甜软糯，逛街必备零嘴。</p>
+          <div class="fc-info"><span>💰 ¥5～15/串</span><span>📸 超级出片</span></div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emoji">🍈</div>
+        <div class="fc-content">
+          <div class="fc-badge fc-badge-sun">洗浴专属</div>
+          <h3>自助榴莲</h3>
+          <p>进门换浴衣，先去自助餐区吃几块新鲜榴莲——浓郁奶香与甜蜜在汗蒸后加倍治愈，这是沈阳独有体验！</p>
+          <div class="fc-info"><span>💰 含在洗浴套餐内</span><span>🍈 D197 / 猫山王</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 预算明细 ========== -->
+<section class="section bg-cream" id="budget">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-tag">💰 BUDGET</div>
+      <h2 class="section-title">两人<em>预算明细</em></h2>
+      <p class="section-sub">精打细算，4000元畅玩沈阳</p>
+    </div>
+
+    <div class="budget-wrap reveal">
+      <table class="budget-tbl">
+        <thead>
+          <tr><th>类别</th><th>明细</th><th>单价</th><th>合计(两人)</th></tr>
+        </thead>
+        <tbody>
+          <tr class="tr-transport"><td rowspan="2" class="cat-cell">🚄 交通</td><td>北京→沈阳 高铁（去程）</td><td>300元/人</td><td>¥600</td></tr>
+          <tr class="tr-transport"><td>沈阳→北京 高铁（返程）</td><td>300元/人</td><td class="merged">↑ 共 ¥600</td></tr>
+          <tr class="tr-hotel"><td class="cat-cell">🏨 住宿</td><td>经济型酒店 × 2晚（中街附近）</td><td>200元/晚</td><td>¥400</td></tr>
+          <tr class="tr-food"><td rowspan="7" class="cat-cell">🍽 餐饮</td><td>Day1 午：老边饺子馆（锅包肉+饺子）</td><td>80元/人</td><td>¥160</td></tr>
+          <tr class="tr-food"><td>Day1 中街小吃（冰点+烧麦+熏肉饼等）</td><td>—</td><td>¥100</td></tr>
+          <tr class="tr-food"><td>Day1 晚：烤鸡架+烤串+冰啤</td><td>60元/人</td><td>¥120</td></tr>
+          <tr class="tr-food"><td>Day2 午：西塔韩国街烤肉+冷面</td><td>90元/人</td><td>¥180</td></tr>
+          <tr class="tr-food"><td>Day2 下午茶（奶茶/咖啡）</td><td>—</td><td>¥55</td></tr>
+          <tr class="tr-food"><td>Day2 晚：东北特色菜（锅包肉+炖菜）</td><td>75元/人</td><td>¥150</td></tr>
+          <tr class="tr-food"><td>Day3 三餐（早市+抻面+告别烤鸡架）</td><td>—</td><td>¥190</td></tr>
+          <tr class="tr-spa"><td class="cat-cell">🏖 洗浴</td><td>榴莲洗浴（入场+自助餐+温泉汗蒸）</td><td>175元/人</td><td>¥400</td></tr>
+          <tr class="tr-ticket"><td rowspan="3" class="cat-cell">🎫 门票</td><td>沈阳故宫（含语音导览）</td><td>55元/人</td><td>¥110</td></tr>
+          <tr class="tr-ticket"><td>张氏帅府（大帅府）</td><td>60元/人</td><td>¥120</td></tr>
+          <tr class="tr-ticket"><td>北陵公园（昭陵）</td><td>50元/人</td><td>¥100</td></tr>
+          <tr class="tr-taxi"><td class="cat-cell">🚇 市内交通</td><td>地铁+打车（3天合计）</td><td>—</td><td>¥150</td></tr>
+          <tr class="tr-souvenir"><td class="cat-cell">🎁 特产</td><td>老龙口酒+不老林糖+酱菜+榛蘑</td><td>—</td><td>¥150</td></tr>
+          <tr class="tr-reserve"><td class="cat-cell">🔖 预备金</td><td>搓澡/足疗/突发购物/零花等</td><td>—</td><td>¥215</td></tr>
+          <tr class="tr-total"><td colspan="3">🌸 合计（两人）</td><td>¥4000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="budget-summary reveal">
+      <div class="bs-card bs-transport"><div class="bs-icon">🚄</div><div class="bs-label">交通</div><div class="bs-val">¥600</div><div class="bs-pct">15%</div></div>
+      <div class="bs-card bs-hotel"><div class="bs-icon">🏨</div><div class="bs-label">住宿</div><div class="bs-val">¥400</div><div class="bs-pct">10%</div></div>
+      <div class="bs-card bs-food"><div class="bs-icon">🍽</div><div class="bs-label">餐饮</div><div class="bs-val">¥955</div><div class="bs-pct">24%</div></div>
+      <div class="bs-card bs-spa"><div class="bs-icon">🏖</div><div class="bs-label">洗浴</div><div class="bs-val">¥400</div><div class="bs-pct">10%</div></div>
+      <div class="bs-card bs-ticket"><div class="bs-icon">🎫</div><div class="bs-label">门票</div><div class="bs-val">¥330</div><div class="bs-pct">8%</div></div>
+      <div class="bs-card bs-other"><div class="bs-icon">🎁</div><div class="bs-label">其他</div><div class="bs-val">¥515</div><div class="bs-pct">13%</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 实用贴士 ========== -->
+<section class="section bg-green" id="tips">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-tag">💡 TIPS</div>
+      <h2 class="section-title">出行<em>实用贴士</em></h2>
+      <p class="section-sub">少走弯路，让旅行更从容</p>
+    </div>
+
+    <div class="tips-grid">
+      <div class="tip-card reveal">
+        <div class="tip-icon">🚄</div>
+        <h4>交通出行</h4>
+        <ul>
+          <li>提前 15 天买高铁票，折扣多</li>
+          <li>沈阳地铁 1/2/9 号线覆盖主景点</li>
+          <li>打车起步 ¥9，景点间打车超划算</li>
+          <li>从北站到故宫可直接步行15分钟</li>
+          <li>滴滴叫车比路边打车更便宜</li>
+        </ul>
+      </div>
+      <div class="tip-card reveal">
+        <div class="tip-icon">🏨</div>
+        <h4>住宿选择</h4>
+        <ul>
+          <li>首选中街商圈或太原街附近</li>
+          <li>经济型连锁酒店 ¥150～200/晚</li>
+          <li>提前7天美团/携程预订更优惠</li>
+          <li>洗浴中心可过夜，可省一晚住宿</li>
+          <li>选地铁口附近，出行最省力</li>
+        </ul>
+      </div>
+      <div class="tip-card reveal">
+        <div class="tip-icon">🍽</div>
+        <h4>美食攻略</h4>
+        <ul>
+          <li>锅包肉要吃<strong>酸甜口</strong>，非酱香口</li>
+          <li>烤鸡架下午6点后才开摊</li>
+          <li>老边饺子饭点排队，提早到</li>
+          <li>中街冰点只有原味才是正宗</li>
+          <li>西塔街晚上去气氛更好</li>
+        </ul>
+      </div>
+      <div class="tip-card reveal">
+        <div class="tip-icon">🏖</div>
+        <h4>洗浴中心</h4>
+        <ul>
+          <li>工作日去便宜，比周末省30~50元</li>
+          <li>美团提前购套餐更优惠</li>
+          <li>带换洗内衣即可，浴衣店里提供</li>
+          <li>榴莲随吃随补，尽情享用</li>
+          <li>搓澡服务约 ¥60，强烈推荐</li>
+        </ul>
+      </div>
+      <div class="tip-card reveal">
+        <div class="tip-icon">🌸</div>
+        <h4>春游最佳时机</h4>
+        <ul>
+          <li>4月中旬：故宫内玉兰花盛开</li>
+          <li>4月末～5月初：北陵丁香花节</li>
+          <li>张氏帅府院内春花最美</li>
+          <li>建议带一件薄外套，早晚凉</li>
+          <li>晴天光线好，拍照最出片</li>
+        </ul>
+      </div>
+      <div class="tip-card reveal">
+        <div class="tip-icon">⚠️</div>
+        <h4>注意事项</h4>
+        <ul>
+          <li>景区提前在公众号预约省排队</li>
+          <li>东北人热情豪爽，不要拘谨</li>
+          <li>带充电宝，扫码支付必须有</li>
+          <li>特产在大超市买比景区便宜</li>
+          <li>避开五一黄金周，人少体验好</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <div class="cta-flowers">🌸🌺🌸🌼🌸🌺🌸</div>
+    <h2>出发吧！春天在等你 🌸</h2>
+    <p>3天2夜，两人4000元，烤鸡架 · 锅包肉 · 榴莲洗浴<br>沈阳的春天，比你想象的更美</p>
+    <div class="cta-btns">
+      <a href="#top" class="cta-btn cta-btn-pink">回到顶部 ↑</a>
+      <a href="#day1" class="cta-btn cta-btn-green">查看行程 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 页脚 ========== -->
+<footer>
+  <div class="footer-flowers">🌸 🌼 🌸 🌺 🌸 🌼 🌸</div>
+  <p>© 2025 沈阳春游攻略 · 3天2夜 · 两人4000元 · 从北京出发</p>
+  <p style="margin-top:8px;opacity:.7;font-size:.85rem">愿每一段旅途都如春花般美好 🌸</p>
+</footer>
+
+<script>
+  /* 飘落花瓣 */
+  const wrap = document.getElementById('petals');
+  const colors = ['#ffb7c5','#ffd6e0','#ffc8dd','#ff99bb','#fde8f0','#ffe4b5'];
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDelay = Math.random() * 12 + 's';
+    p.style.animationDuration = (10 + Math.random() * 12) + 's';
+    p.style.width = p.style.height = (8 + Math.random() * 12) + 'px';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.opacity = (0.4 + Math.random() * 0.5).toFixed(2);
+    wrap.appendChild(p);
+  }
+
+  /* 滚动出现 */
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+  }, { threshold: .1 });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+</script>
+</body>
+</html>

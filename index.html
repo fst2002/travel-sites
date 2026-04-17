@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Agent · 智能体介绍</title>
+  <style>
+    :root {
+      --primary: #00f0ff;
+      --secondary: #7b2fff;
+      --accent: #ff2d78;
+      --bg: #020a12;
+      --bg2: #050f1e;
+      --card: rgba(0, 240, 255, 0.04);
+      --border: rgba(0, 240, 255, 0.15);
+      --text: #c8e6f0;
+      --text-dim: #4a7a8a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      overflow-x: hidden;
+    }
+
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 60px;
+      background: rgba(2, 10, 18, 0.7);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--primary);
+      text-transform: uppercase;
+      text-shadow: 0 0 20px var(--primary);
+    }
+
+    .nav-logo span { color: var(--secondary); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color .3s, text-shadow .3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+      text-shadow: 0 0 10px var(--primary);
+    }
+
+    #hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 20px 60px;
+    }
+
+    .hero-tag {
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--primary);
+      border: 1px solid var(--border);
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      background: rgba(0,240,255,0.06);
+      animation: fadeUp .8s ease both;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      animation: fadeUp .9s .1s ease both;
+    }
+
+    .hero-title .line1 { color: #fff; }
+
+    .hero-title .line2 {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      margin-top: 24px;
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      max-width: 560px;
+      line-height: 1.8;
+      animation: fadeUp 1s .2s ease both;
+    }
+
+    .hero-btns {
+      margin-top: 44px;
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 1s .3s ease both;
+    }
+
+    .btn-primary {
+      padding: 14px 36px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity .3s, transform .3s;
+      text-decoration: none;
+    }
+
+    .btn-primary:hover { opacity: .85; transform: translateY(-2px); }
+
+    .btn-outline {
+      padding: 14px 36px;
+      background: transparent;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      border: 1px solid var(--primary);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background .3s, transform .3s;
+      text-decoration: none;
+    }
+
+    .btn-outline:hover {
+      background: rgba(0,240,255,0.08);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      margin-top: 70px;
+      display: flex;
+      gap: 60px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 1s .4s ease both;
+    }
+
+    .stat { text-align: center; }
+
+    .stat-num {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .stat-num span {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 40px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .section-tag {
+      font-size: 0.72rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .section-title em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-desc {
+      margin-top: 16px;
+      color: var(--text-dim);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #what {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .what-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .what-visual {
+      position: relative;
+      height: 360px;
+    }
+
+    .agent-core {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,240,255,0.2) 0%, transparent 70%);
+      border: 2px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      animation: pulse 3s ease-in-out infinite;
+      box-shadow: 0 0 40px rgba(0,240,255,0.3), inset 0 0 40px rgba(0,240,255,0.1);
+    }
+
+    .orbit {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px dashed var(--border);
+    }
+
+    .orbit-1 { width: 200px; height: 200px; animation: spin 8s linear infinite; }
+    .orbit-2 { width: 290px; height: 290px; animation: spin 14s linear infinite reverse; }
+    .orbit-3 { width: 360px; height: 360px; animation: spin 20s linear infinite; }
+
+    .orbit-dot {
+      position: absolute;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 12px var(--primary);
+      top: -5px; left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .orbit-dot-2 {
+      background: var(--secondary);
+      box-shadow: 0 0 12px var(--secondary);
+    }
+
+    .orbit-dot-3 {
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    .what-text h3 {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .what-text p {
+      color: var(--text-dim);
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--primary);
+      background: rgba(0,240,255,0.05);
+      letter-spacing: 0.5px;
+    }
+
+    #capabilities { background: var(--bg); }
+
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .cap-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px 28px;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+      cursor: default;
+    }
+
+    .cap-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,240,255,0.08);
+    }
+
+    .cap-icon {
+      font-size: 2.2rem;
+      margin-bottom: 18px;
+      display: block;
+    }
+
+    .cap-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .cap-desc {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+
+    .cap-bar {
+      margin-top: 20px;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .cap-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      animation: growBar 1.5s ease forwards;
+      transform-origin: left;
+    }
+
+    #how { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      left: 35px;
+      top: 40px;
+      bottom: 40px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary), var(--accent));
+      opacity: 0.4;
+    }
+
+    .step {
+      display: flex;
+      gap: 36px;
+      padding: 32px 0;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+      background: rgba(0,240,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary);
+      box-shadow: 0 0 20px rgba(0,240,255,0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-content h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+      padding-top: 18px;
+    }
+
+    .step-content p {
+      color: var(--text-dim);
+      line-height: 1.8;
+      font-size: 0.92rem;
+    }
+
+    #cases { background: var(--bg); }
+
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .case-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--card);
+      display: flex;
+      align-items: stretch;
+      transition: border-color .3s, box-shadow .3s;
+    }
+
+    .case-card:hover {
+      border-color: rgba(123,47,255,0.5);
+      box-shadow: 0 0 30px rgba(123,47,255,0.1);
+    }
+
+    .case-side {
+      width: 6px;
+      flex-shrink: 0;
+    }
+
+    .case-body {
+      padding: 28px 24px;
+    }
+
+    .case-emoji {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .case-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .case-desc {
+      font-size: 0.86rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+
+    #future {
+      background: radial-gradient(ellipse at center, rgba(123,47,255,0.12) 0%, transparent 70%), var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+
+    .future-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .future-card {
+      text-align: center;
+      padding: 40px 24px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--card);
+      transition: transform .3s;
+    }
+
+    .future-card:hover { transform: translateY(-6px); }
+
+    .future-num {
+      font-size: 3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .future-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .future-desc {
+      font-size: 0.84rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+
+    #cta {
+      background: var(--bg);
+    }
+
+    .cta-box {
+      background: linear-gradient(135deg, rgba(0,240,255,0.07) 0%, rgba(123,47,255,0.07) 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      text-align: center;
+      padding: 80px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,240,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-box h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .cta-box p {
+      color: var(--text-dim);
+      margin-bottom: 36px;
+      font-size: 1rem;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 30px;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+    }
+
+    footer span { color: var(--primary); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 40px rgba(0,240,255,0.3), inset 0 0 40px rgba(0,240,255,0.1); }
+      50%       { box-shadow: 0 0 70px rgba(0,240,255,0.5), inset 0 0 60px rgba(0,240,255,0.2); }
+    }
+
+    @keyframes spin {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to   { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes growBar {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .what-grid { grid-template-columns: 1fr; }
+      .what-visual { height: 260px; }
+      .cap-grid { grid-template-columns: 1fr; }
+      .cases-grid { grid-template-columns: 1fr; }
+      .future-grid { grid-template-columns: 1fr; }
+      .section-inner { padding: 70px 24px; }
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1em;
+      background: var(--primary);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <div class="nav-logo">AI<span>Agent</span></div>
+  <ul class="nav-links">
+    <li><a href="#what">是什么</a></li>
+    <li><a href="#capabilities">能力</a></li>
+    <li><a href="#how">原理</a></li>
+    <li><a href="#cases">应用</a></li>
+    <li><a href="#future">未来</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-tag">▸ Next-Gen AI Technology</div>
+  <h1 class="hero-title">
+    <div class="line1">探索未来</div>
+    <div class="line2" id="typing-title">智能体时代</div>
+  </h1>
+  <p class="hero-sub">AI Agent 是能够自主感知环境、独立思考、规划决策并执行动作的新一代人工智能系统，正在重塑人类与 AI 协作的边界。</p>
+  <div class="hero-btns">
+    <a href="#what" class="btn-primary">深入了解</a>
+    <a href="#capabilities" class="btn-outline">查看能力</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num"><span id="cnt1">0</span>+</div>
+      <div class="stat-label">应用场景</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num"><span id="cnt2">0</span>%</div>
+      <div class="stat-label">效率提升</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num"><span id="cnt3">0</span>×</div>
+      <div class="stat-label">决策速度</div>
+    </div>
+  </div>
+</section>
+
+<section id="what">
+  <div class="section-inner">
+    <div class="what-grid">
+      <div class="what-visual reveal">
+        <div class="orbit orbit-1"><div class="orbit-dot"></div></div>
+        <div class="orbit orbit-2"><div class="orbit-dot orbit-dot-2"></div></div>
+        <div class="orbit orbit-3"><div class="orbit-dot orbit-dot-3"></div></div>
+        <div class="agent-core">🤖</div>
+      </div>
+      <div class="what-text reveal">
+        <div class="section-tag">// DEFINITION</div>
+        <h3>什么是 <em style="font-style:normal;background:linear-gradient(90deg,#00f0ff,#7b2fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">智能体</em>？</h3>
+        <p>AI Agent（智能体）是一种能够<strong style="color:#fff;">自主感知、推理、规划并行动</strong>的 AI 系统。与传统 AI 不同，它不需要人类逐步指令，而是能理解目标、制定策略，自主完成复杂任务。</p>
+        <p>智能体拥有记忆系统、工具调用能力与多步骤推理能力，可以连接互联网、操作软件、调用 API，甚至与其他智能体协作——像人类员工一样运转。</p>
+        <div class="tag-list">
+          <span class="tag">自主决策</span>
+          <span class="tag">工具使用</span>
+          <span class="tag">记忆系统</span>
+          <span class="tag">多步规划</span>
+          <span class="tag">多智能体协作</span>
+          <span class="tag">环境感知</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="capabilities">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">// CAPABILITIES</div>
+      <h2 class="section-title">核心<em>能力矩阵</em></h2>
+      <p class="section-desc">智能体整合感知、认知与执行能力，构建完整的自主决策闭环</p>
+    </div>
+    <div class="cap-grid">
+      <div class="cap-card reveal">
+        <span class="cap-icon">🧠</span>
+        <div class="cap-title">深度推理</div>
+        <div class="cap-desc">基于大语言模型的链式思维推理（Chain-of-Thought），拆解复杂问题，逐步分析，给出高质量决策。</div>
+        <div class="cap-bar"><div class="cap-bar-fill" style="width:92%"></div></div>
+      </div>
+      <div class="cap-card reveal">
+        <span class="cap-icon">🗂️</span>
+        <div class="cap-title">记忆管理</div>
+        <div class="cap-desc">具备短期工作记忆与长期向量记忆，跨会话保持上下文连续性，形成持续学习与个性化能力。</div>
+        <div class="cap-bar"><div class="cap-bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="cap-card reveal">
+        <span class="cap-icon">🔧</span>
+        <div class="cap-title">工具调用</div>
+        <div class="cap-desc">自主调用搜索引擎、代码执行器、数据库、API、浏览器等外部工具，将数字世界变为操控对象。</div>
+        <div class="cap-bar"><div class="cap-bar-fill" style="width:95%"></div></div>
+      </div>
+      <div class="cap-card reveal">
+        <span class="cap-icon">📋</span>
+        <div class="cap-title">任务规划</div>
+        <div class="cap-desc">将高层次目标自动分解为可执行子任务，构建任务树并动态调整计划，应对执行过程中的变化与失败。</div>
+        <div class="cap-bar"><div class="cap-bar-fill" style="width:88%"></div></div>
+      </div>
+      <div class="cap-card reveal">
+        <span class="cap-icon">👁️</span>
+        <div class="cap-title">多模态感知</div>
+        <div class="cap-desc">理解文本、图像、音频、视频等多种模态信息，融合跨模态数据进行综合分析与判断。</div>
+        <div class="cap-bar"><div class="cap-bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="cap-card reveal">
+        <span class="cap-icon">🌐</span>
+        <div class="cap-title">多智能体协作</div>
+        <div class="cap-desc">以编排者或执行者角色与多个专业智能体协作，形成智能体网络，共同解决超出单一模型能力边界的任务。</div>
+        <div class="cap-bar"><div class="cap-bar-fill" style="width:78%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">// HOW IT WORKS</div>
+      <h2 class="section-title">智能体<em>运行原理</em></h2>
+      <p class="section-desc">感知→推理→规划→行动→反思，构成智能体完整的自主循环</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h4>感知输入 · Perception</h4>
+          <p>智能体接收来自用户的指令、环境状态、工具返回结果等多元信息，将非结构化输入转化为可处理的内部表示，构建对当前情境的理解。</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h4>推理思考 · Reasoning</h4>
+          <p>借助大语言模型的推理能力，智能体深入分析问题，识别关键约束，评估不同策略的优劣，在不确定性中做出最优判断。</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h4>任务规划 · Planning</h4>
+          <p>将复杂目标拆解为结构化的子任务序列，为每个子任务分配优先级与依赖关系，形成可执行的行动蓝图。</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h4>工具执行 · Action</h4>
+          <p>按照计划调用相应工具——搜索信息、执行代码、操控界面、调用服务——将思维转化为真实世界的改变。</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <h4>反思迭代 · Reflection</h4>
+          <p>评估行动结果是否符合预期，若偏离目标则自动调整策略重新规划，形成持续迭代的闭环优化机制。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cases">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">// USE CASES</div>
+      <h2 class="section-title"><em>应用场景</em>全景</h2>
+      <p class="section-desc">智能体正在渗透各行各业，成为新一代数字劳动力</p>
+    </div>
+    <div class="cases-grid">
+      <div class="case-card reveal">
+        <div class="case-side" style="background:linear-gradient(to bottom, #00f0ff, #7b2fff)"></div>
+        <div class="case-body">
+          <span class="case-emoji">💻</span>
+          <div class="case-title">软件开发</div>
+          <div class="case-desc">自动编写、测试、调试代码；根据需求文档生成完整项目；与开发者结对编程，大幅提升工程效率。</div>
+        </div>
+      </div>
+      <div class="case-card reveal">
+        <div class="case-side" style="background:linear-gradient(to bottom, #7b2fff, #ff2d78)"></div>
+        <div class="case-body">
+          <span class="case-emoji">📊</span>
+          <div class="case-title">数据分析</div>
+          <div class="case-desc">自动收集、清洗、分析数据，生成可视化报告，挖掘商业洞察，替代重复性的数据处理工作。</div>
+        </div>
+      </div>
+      <div class="case-card reveal">
+        <div class="case-side" style="background:linear-gradient(to bottom, #ff2d78, #ff8c00)"></div>
+        <div class="case-body">
+          <span class="case-emoji">🎯</span>
+          <div class="case-title">智能客服</div>
+          <div class="case-desc">理解复杂用户意图，自主查询知识库与系统，完成退款、预约、投诉处理等端到端服务流程。</div>
+        </div>
+      </div>
+      <div class="case-card reveal">
+        <div class="case-side" style="background:linear-gradient(to bottom, #ff8c00, #00f0ff)"></div>
+        <div class="case-body">
+          <span class="case-emoji">🔬</span>
+          <div class="case-title">科研助理</div>
+          <div class="case-desc">自动检索文献、提取关键信息、生成综述报告，协助研究人员加速假设验证与实验设计。</div>
+        </div>
+      </div>
+      <div class="case-card reveal">
+        <div class="case-side" style="background:linear-gradient(to bottom, #00f0ff, #00ff88)"></div>
+        <div class="case-body">
+          <span class="case-emoji">📝</span>
+          <div class="case-title">内容创作</div>
+          <div class="case-desc">根据品牌调性自动生成营销文案、SEO 文章、视频脚本，并完成多平台发布与效果追踪。</div>
+        </div>
+      </div>
+      <div class="case-card reveal">
+        <div class="case-side" style="background:linear-gradient(to bottom, #00ff88, #7b2fff)"></div>
+        <div class="case-body">
+          <span class="case-emoji">🏥</span>
+          <div class="case-title">医疗辅助</div>
+          <div class="case-desc">辅助病历分析与诊断建议，自动整理患者信息，协助医生进行治疗方案规划与随访管理。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="future">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">// THE FUTURE</div>
+      <h2 class="section-title">迈向<em>智能体时代</em></h2>
+      <p class="section-desc">智能体不只是工具，它是人类智慧的延伸与放大</p>
+    </div>
+    <div class="future-grid">
+      <div class="future-card reveal">
+        <span class="future-num">AGI</span>
+        <div class="future-title">通用智能进化</div>
+        <div class="future-desc">多智能体系统协同运作，逐步逼近能够完成任意认知任务的通用人工智能边界。</div>
+      </div>
+      <div class="future-card reveal">
+        <span class="future-num">∞</span>
+        <div class="future-title">无限可扩展性</div>
+        <div class="future-desc">一个目标可以同时启动数百个智能体并行执行，突破人类认知带宽的物理极限。</div>
+      </div>
+      <div class="future-card reveal">
+        <span class="future-num">24/7</span>
+        <div class="future-title">永不停歇运转</div>
+        <div class="future-desc">智能体不需要休息，全天候监控、执行、优化，成为永不疲倦的数字劳动伙伴。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <div class="section-inner">
+    <div class="cta-box reveal">
+      <h2>准备好迎接<em style="font-style:normal;background:linear-gradient(90deg,#00f0ff,#7b2fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">智能体革命</em>了吗？</h2>
+      <p>AI Agent 正在重新定义工作、创造与合作的方式，未来已来。</p>
+      <a href="#hero" class="btn-primary">回到顶部 ↑</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 <span>AI Agent</span> · 智能体介绍 · Powered by Next-Gen AI</p>
+</footer>
+
+<script>
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+function createParticle() {
+  return {
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: Math.random() * 1.2 + 0.2,
+    vx: (Math.random() - .5) * 0.4,
+    vy: (Math.random() - .5) * 0.4,
+    alpha: Math.random() * 0.5 + 0.1
+  };
+}
+
+for (let i = 0; i < 140; i++) particles.push(createParticle());
+
+function drawParticles() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0 || p.x > W) p.vx *= -1;
+    if (p.y < 0 || p.y > H) p.vy *= -1;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0,240,255,${p.alpha})`;
+    ctx.fill();
+  });
+
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 110) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(0,240,255,${0.12 * (1 - dist / 110)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+reveals.forEach(r => observer.observe(r));
+
+function countUp(el, target, duration = 1800) {
+  let start = 0, step = target / (duration / 16);
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= target) { start = target; clearInterval(timer); }
+    el.textContent = Math.floor(start);
+  }, 16);
+}
+
+const statsObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      countUp(document.getElementById('cnt1'), 50);
+      countUp(document.getElementById('cnt2'), 80);
+      countUp(document.getElementById('cnt3'), 100);
+      statsObserver.disconnect();
+    }
+  });
+}, { threshold: 0.5 });
+statsObserver.observe(document.querySelector('.hero-stats'));
+
+const typingEl = document.getElementById('typing-title');
+const text = '智能体时代';
+typingEl.textContent = '';
+const cursor = document.createElement('span');
+cursor.className = 'cursor';
+typingEl.appendChild(cursor);
+let ti = 0;
+setTimeout(() => {
+  const typeTimer = setInterval(() => {
+    if (ti < text.length) {
+      typingEl.insertBefore(document.createTextNode(text[ti]), cursor);
+      ti++;
+    } else {
+      clearInterval(typeTimer);
+    }
+  }, 160);
+}, 600);
+</script>
+</body>
+</html>

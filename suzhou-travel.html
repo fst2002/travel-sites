@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌿 苏州春游攻略 · 3天2夜 · 北京出发</title>
+  <style>
+/* ===== CSS 变量 & 重置 ===== */
+:root {
+  --ink:       #2d3a2e;
+  --ink-mid:   #5a6b4e;
+  --ink-light: #8fa87e;
+  --petal:     #f5c9cb;
+  --petal2:    #e8929a;
+  --lotus:     #d4a5c9;
+  --jade:      #7bc4a8;
+  --jade2:     #3d9e7a;
+  --water:     #a8d4e8;
+  --water2:    #5498c0;
+  --gold:      #d4a843;
+  --cream:     #faf8f2;
+  --paper:     #fffef8;
+  --shadow:    rgba(45,58,46,.1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'PingFang SC','Noto Serif SC','Microsoft YaHei',serif;
+  background:var(--cream);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+
+/* ===== 纸质纹理背景 ===== */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(168,212,232,.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(123,196,168,.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 10%, rgba(245,201,203,.18) 0%, transparent 40%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ===== 飘落花瓣 ===== */
+.petals{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.petal{
+  position:absolute;top:-30px;
+  border-radius:50% 10% 50% 10%;
+  animation:petalFall linear infinite;
+  opacity:.65;
+}
+@keyframes petalFall{
+  0%  {transform:translateY(-30px) rotate(0deg) translateX(0);   opacity:.7}
+  50% {transform:translateY(45vh)  rotate(200deg) translateX(50px); opacity:.5}
+  100%{transform:translateY(105vh) rotate(400deg) translateX(-30px);opacity:0}
+}
+
+/* ===== 滚动出现 ===== */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease}
+.reveal.show{opacity:1;transform:none}
+
+/* ===== 导航 ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 50px;
+  background:rgba(250,248,242,.88);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(212,168,67,.3);
+  box-shadow:0 2px 20px rgba(45,58,46,.06);
+}
+.nav-logo{
+  font-size:1.15rem;font-weight:800;
+  color:var(--jade2);
+  letter-spacing:2px;
+  display:flex;align-items:center;gap:8px;
+}
+.nav-logo .dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--petal2);
+  display:inline-block;
+}
+.nav-links{list-style:none;display:flex;gap:28px}
+.nav-links a{
+  text-decoration:none;
+  color:var(--ink-mid);
+  font-size:.88rem;
+  letter-spacing:1.5px;
+  position:relative;
+  transition:color .25s;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;
+  height:2px;background:var(--petal2);
+  transform:scaleX(0);transition:transform .3s;border-radius:2px;
+}
+.nav-links a:hover{color:var(--jade2)}
+.nav-links a:hover::after{transform:scaleX(1)}
+
+/* ===== 通用 Section ===== */
+.section{position:relative;z-index:1}
+.section-inner{max-width:1160px;margin:0 auto;padding:88px 32px}
+.section-head{text-align:center;margin-bottom:58px}
+.s-tag{
+  display:inline-block;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--jade2);
+  border:1px solid var(--jade);padding:4px 14px;border-radius:50px;
+  margin-bottom:12px;background:rgba(123,196,168,.1);
+}
+.s-title{
+  font-size:clamp(1.7rem,4vw,2.8rem);font-weight:800;
+  color:var(--ink);line-height:1.2;
+}
+.s-title em{
+  font-style:normal;
+  background:linear-gradient(90deg,var(--jade2),var(--water2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.s-sub{margin-top:12px;color:var(--ink-light);font-size:.97rem;line-height:1.9}
+
+/* ===== 背景变体 ===== */
+.bg-paper {background:var(--paper)}
+.bg-cream {background:var(--cream)}
+.bg-jade  {background:linear-gradient(180deg,#f0faf6 0%,var(--paper) 100%)}
+.bg-petal {background:linear-gradient(180deg,#fff5f6 0%,var(--paper) 100%)}
+.bg-water {background:linear-gradient(180deg,#f0f8ff 0%,var(--paper) 100%)}
+
+/* ===== 水墨装饰分割线 ===== */
+.ink-divider{
+  text-align:center;padding:8px 0;font-size:1.4rem;
+  opacity:.4;letter-spacing:12px;
+}
+
+/* ===== HERO 区 ===== */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  padding:120px 24px 80px;
+  overflow:hidden;
+  background:
+    linear-gradient(170deg,rgba(168,212,232,.2) 0%,rgba(245,201,203,.15) 40%,rgba(123,196,168,.18) 100%),
+    var(--paper);
+}
+/* 背景水墨圆 */
+.hero::before{
+  content:'';position:absolute;
+  top:-150px;right:-150px;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(168,212,232,.25) 0%,transparent 70%);
+}
+.hero::after{
+  content:'';position:absolute;
+  bottom:-120px;left:-100px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(123,196,168,.2) 0%,transparent 70%);
+}
+/* 苏州园林窗框装饰 */
+.hero-frame{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:min(680px,90vw);
+  height:min(520px,70vh);
+  border:2px solid rgba(212,168,67,.2);
+  border-radius:50% 50% 50% 50% / 30% 30% 70% 70%;
+  pointer-events:none;
+}
+.hero-frame-2{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:min(560px,78vw);
+  height:min(420px,60vh);
+  border:1px solid rgba(212,168,67,.12);
+  border-radius:50% 50% 50% 50% / 30% 30% 70% 70%;
+  pointer-events:none;
+}
+
+.hero-eyebrow{
+  font-size:.75rem;letter-spacing:4px;text-transform:uppercase;
+  color:var(--jade2);
+  background:rgba(123,196,168,.12);
+  border:1px solid rgba(123,196,168,.4);
+  padding:6px 20px;border-radius:50px;
+  margin-bottom:24px;
+  position:relative;z-index:2;
+  animation:fadeUp .8s ease both;
+}
+.hero-title{
+  position:relative;z-index:2;
+  font-size:clamp(2.6rem,8vw,5.8rem);
+  font-weight:900;line-height:1.1;
+  margin-bottom:18px;
+  animation:fadeUp .9s .1s ease both;
+}
+.hero-title .ch{color:var(--ink)}
+.hero-title .en{
+  font-size:clamp(1rem,2.5vw,1.8rem);
+  font-weight:400;
+  letter-spacing:6px;
+  color:var(--ink-light);
+  display:block;margin-top:8px;
+}
+.hero-title em{
+  font-style:normal;
+  background:linear-gradient(90deg,var(--jade2),var(--water2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-poem{
+  position:relative;z-index:2;
+  font-size:1.05rem;color:var(--ink-mid);
+  line-height:2.2;margin-bottom:8px;
+  letter-spacing:2px;
+  animation:fadeUp 1s .2s ease both;
+}
+.hero-poem-en{
+  position:relative;z-index:2;
+  font-size:.82rem;color:var(--ink-light);
+  letter-spacing:1px;margin-bottom:40px;
+  animation:fadeUp 1s .25s ease both;
+}
+.hero-tags{
+  position:relative;z-index:2;
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+  margin-bottom:50px;
+  animation:fadeUp 1s .3s ease both;
+}
+.htag{
+  padding:9px 20px;border-radius:50px;
+  font-size:.88rem;font-weight:700;letter-spacing:.5px;
+}
+.htag-jade {background:linear-gradient(135deg,var(--jade),var(--jade2));color:#fff;box-shadow:0 4px 14px rgba(61,158,122,.28)}
+.htag-petal{background:linear-gradient(135deg,var(--petal),var(--petal2));color:#fff;box-shadow:0 4px 14px rgba(232,146,154,.28)}
+.htag-water{background:linear-gradient(135deg,var(--water),var(--water2));color:#fff;box-shadow:0 4px 14px rgba(84,152,192,.28)}
+.htag-gold {background:linear-gradient(135deg,#e8c96a,var(--gold));color:#fff;box-shadow:0 4px 14px rgba(212,168,67,.28)}
+
+.hero-stats{
+  position:relative;z-index:2;
+  display:flex;gap:28px;flex-wrap:wrap;justify-content:center;
+  animation:fadeUp 1s .4s ease both;
+}
+.hstat{
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(212,168,67,.25);
+  border-radius:16px;
+  padding:18px 28px;
+  text-align:center;
+  box-shadow:0 4px 20px var(--shadow);
+  min-width:110px;
+}
+.hstat-val{font-size:2rem;font-weight:900;color:var(--jade2)}
+.hstat-lbl{font-size:.72rem;letter-spacing:2px;color:var(--ink-light);margin-top:4px}
+.scroll-hint{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  color:var(--ink-light);font-size:.78rem;letter-spacing:2px;
+  animation:bounce 2s infinite;z-index:2;
+}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+
+/* ===== 响应式 ===== */
+@media(max-width:768px){
+  nav{padding:12px 18px}
+  .nav-links{display:none}
+  .section-inner{padding:60px 18px}
+  .hero-stats{gap:12px}
+  .hstat{padding:14px 18px;min-width:90px}
+  .hstat-val{font-size:1.5rem}
+}
+  </style>
+</head>
+<body>
+
+<!-- 飘落花瓣 -->
+<div class="petals" id="petals"></div>
+
+<!-- 导航 -->
+<nav>
+  <div class="nav-logo"><span class="dot"></span>苏州春游</div>
+  <ul class="nav-links">
+    <li><a href="#overview">行程</a></li>
+    <li><a href="#day1">Day 1</a></li>
+    <li><a href="#day2">Day 2</a></li>
+    <li><a href="#day3">Day 3</a></li>
+    <li><a href="#food">美食</a></li>
+    <li><a href="#photo">打卡</a></li>
+    <li><a href="#hotel">住宿</a></li>
+    <li><a href="#budget">预算</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="hero-frame"></div>
+  <div class="hero-frame-2"></div>
+
+  <div class="hero-eyebrow">🌿 苏州 · 园林之城 · 人间天堂 🌿</div>
+  <h1 class="hero-title">
+    <div class="ch">苏州春日<em>三日游</em></div>
+    <span class="en">Suzhou Garden · Spring Journey</span>
+  </h1>
+  <p class="hero-poem">君到姑苏见，人家尽枕河</p>
+  <p class="hero-poem-en">Where willows meet water, gardens tell eternal stories</p>
+
+  <div class="hero-tags">
+    <span class="htag htag-jade">🚄 北京出发</span>
+    <span class="htag htag-petal">🌸 园林赏春</span>
+    <span class="htag htag-water">🎑 水乡古镇</span>
+    <span class="htag htag-gold">🍜 苏帮美食</span>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-val">3</div><div class="hstat-lbl">天 数</div></div>
+    <div class="hstat"><div class="hstat-val">5+</div><div class="hstat-lbl">精选景点</div></div>
+    <div class="hstat"><div class="hstat-val">8+</div><div class="hstat-lbl">特色美食</div></div>
+    <div class="hstat"><div class="hstat-val">10+</div><div class="hstat-lbl">拍照打卡</div></div>
+  </div>
+
+  <div class="scroll-hint">↓ 探索行程</div>
+</section>
+
+<!-- ===== 行程概览 ===== -->
+<section class="section bg-jade" id="overview">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="s-tag">🗓 OVERVIEW</div>
+      <h2 class="s-title">三日<em>行程概览</em></h2>
+      <p class="s-sub">从北京出发，踏入这座藏在水墨里的千年古城</p>
+    </div>
+
+    <div class="ov-grid">
+      <div class="ov-card ov-c1 reveal">
+        <div class="ov-day-badge">Day 1</div>
+        <div class="ov-icon">🚄</div>
+        <h3>抵达 · 园林初探</h3>
+        <ul>
+          <li>🚄 北京南站高铁出发</li>
+          <li>🏨 入住平江路民宿</li>
+          <li>🌿 拙政园 · 下午赏园</li>
+          <li>🛶 平江路水街漫步</li>
+          <li>🍜 松鹤楼苏帮晚宴</li>
+        </ul>
+        <div class="ov-note">重点：苏州四大园林之首</div>
+      </div>
+
+      <div class="ov-card ov-c2 reveal">
+        <div class="ov-day-badge">Day 2</div>
+        <div class="ov-icon">⛵</div>
+        <h3>水乡 · 古镇深游</h3>
+        <ul>
+          <li>🌅 同里古镇 · 一日游</li>
+          <li>🏮 退思园 · 世界遗产</li>
+          <li>🚣 摇橹船穿古巷</li>
+          <li>🧁 碧螺春茶 + 青团</li>
+          <li>🌸 留园 · 傍晚漫游</li>
+        </ul>
+        <div class="ov-note">重点：江南水乡文化精华</div>
+      </div>
+
+      <div class="ov-card ov-c3 reveal">
+        <div class="ov-day-badge">Day 3</div>
+        <div class="ov-icon">🎨</div>
+        <h3>古典 · 满载而归</h3>
+        <ul>
+          <li>🌄 虎丘塔 · 晨游</li>
+          <li>🎭 苏绣博物馆</li>
+          <li>🍡 观前街扫货小吃</li>
+          <li>🛍 苏式特产大采购</li>
+          <li>🚄 高铁返回北京</li>
+        </ul>
+        <div class="ov-note">重点：苏州千年文化收尾</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DAY 1 ===== -->
+<section class="section bg-petal" id="day1">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="s-tag">📅 DAY 1</div>
+      <h2 class="s-title">抵达姑苏 · <em>园林初探</em></h2>
+      <p class="s-sub">踏上高铁，人间天堂等候已久</p>
+    </div>
+
+    <div class="tl">
+
+      <div class="tl-item reveal">
+        <div class="tl-time">07:00</div>
+        <div class="tl-dot tl-dot-jade"></div>
+        <div class="tl-card">
+          <div class="tl-hd">
+            <span class="tl-ico">🚄</span>
+            <div>
+              <h4>北京南站 · 高铁出发</h4>
+              <span class="tlbadge tlbadge-jade">交通</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>乘坐高铁从<strong>北京南站</strong>出发，全程约 <strong>4.5～5 小时</strong>，到达苏州站或苏州北站，一路江南春色入眼帘。</p>
+            <div class="tip-box">
+              <div class="tip-row">🎫 推荐车次：G163 / G7107，约12:00前抵达苏州</div>
+              <div class="tip-row">💰 票价约 <strong>¥235～310元/张</strong>（二等座）</div>
+              <div class="tip-row">📱 12306 提前15天购票，有折扣</div>
+              <div class="tip-row">🧳 带上轻便行李，苏州路窄街深，拉杆箱稍费劲</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">12:30</div>
+        <div class="tl-dot tl-dot-petal"></div>
+        <div class="tl-card tl-featured">
+          <div class="tl-feat-label">🏠 住宿推荐</div>
+          <div class="tl-hd">
+            <span class="tl-ico">🏨</span>
+            <div>
+              <h4>入住平江路民宿</h4>
+              <span class="tlbadge tlbadge-petal">住宿</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p><strong>平江路</strong>是苏州保存最完好的历史街区，两侧白墙黛瓦、小桥流水，住在这里推开窗就是千年古城。</p>
+            <div class="hotel-grid">
+              <div class="hotel-item">
+                <div class="hotel-name">🌿 平江路精品民宿</div>
+                <div class="hotel-info">白墙黛瓦小院，含早餐</div>
+                <div class="hotel-price">¥160～220/晚</div>
+              </div>
+              <div class="hotel-item">
+                <div class="hotel-name">🏮 苏式客栈</div>
+                <div class="hotel-info">传统苏州院落改造</div>
+                <div class="hotel-price">¥140～180/晚</div>
+              </div>
+              <div class="hotel-item">
+                <div class="hotel-name">🛏 经济连锁酒店</div>
+                <div class="hotel-info">汉庭/如家，附近商圈</div>
+                <div class="hotel-price">¥120～160/晚</div>
+              </div>
+            </div>
+            <div class="tip-box" style="margin-top:12px">
+              <div class="tip-row">📍 首选平江路、观前街附近，步行可达拙政园</div>
+              <div class="tip-row">💡 美团/携程提前3天预订更优惠</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">13:00</div>
+        <div class="tl-dot tl-dot-gold"></div>
+        <div class="tl-card">
+          <div class="tl-hd">
+            <span class="tl-ico">🍜</span>
+            <div>
+              <h4>午餐 · 苏式面馆</h4>
+              <span class="tlbadge tlbadge-gold">美食</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>到苏州的第一顿，必须是一碗正宗的<strong>苏式头汤面</strong>！枣红色的红汤底，浇头丰盛，鲜甜入味，是苏州人的日常幸福。</p>
+            <div class="tip-box">
+              <div class="tip-row">🍜 推荐：<strong>朱鸿兴面馆</strong>（观前街老字号）</div>
+              <div class="tip-row">🥢 必点：<strong>枫镇大肉面</strong>（夏季限定）/ 三虾面 / 爆鱼面</div>
+              <div class="tip-row">💰 人均约 ¥25～40</div>
+              <div class="tip-row">⏰ 饭点可能排队，提前到</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">14:30</div>
+        <div class="tl-dot tl-dot-jade"></div>
+        <div class="tl-card tl-featured">
+          <div class="tl-feat-label">🏆 苏州必游 No.1</div>
+          <div class="tl-hd">
+            <span class="tl-ico">🌿</span>
+            <div>
+              <h4>拙政园 · 苏州四大园林之首</h4>
+              <span class="tlbadge tlbadge-jade">景点</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>中国最大的私家园林，<strong>UNESCO 世界文化遗产</strong>。春天里海棠、紫藤、牡丹次第盛开，每一处转角都是一幅画，每一步都是千年历史。</p>
+            <div class="poi-box">
+              <div class="poi-row"><span>💰</span><span>门票：<strong>90元/人</strong>（淡季70元）</span></div>
+              <div class="poi-row"><span>⏰</span><span>游览时长：约 2.5～3 小时</span></div>
+              <div class="poi-row"><span>📸</span><span>最佳拍摄：远香堂前倒影 / 香洲水廊 / 小飞虹廊桥</span></div>
+              <div class="poi-row"><span>🌸</span><span>春季亮点：海棠春坞赏海棠（3月末～4月）</span></div>
+              <div class="poi-row"><span>🎧</span><span>建议租语音导览（20元），了解每处典故</span></div>
+              <div class="poi-row"><span>🎟</span><span>提前在微信小程序预约，可省排队时间</span></div>
+            </div>
+            <div class="photo-spots">
+              <div class="photo-spot-title">📸 拍照打卡点</div>
+              <div class="ps-grid">
+                <div class="ps-item"><span class="ps-ico">🌉</span><div><strong>小飞虹廊桥</strong><p>苏州园林唯一廊桥，倒影入水，如诗如画</p></div></div>
+                <div class="ps-item"><span class="ps-ico">🏛</span><div><strong>远香堂前广场</strong><p>正面荷花池，四季皆有景，春天最醉人</p></div></div>
+                <div class="ps-item"><span class="ps-ico">🪟</span><div><strong>漏窗框景</strong><p>各式花窗框出园中景，每扇都是一幅画</p></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">18:00</div>
+        <div class="tl-dot tl-dot-water"></div>
+        <div class="tl-card">
+          <div class="tl-hd">
+            <span class="tl-ico">🛶</span>
+            <div>
+              <h4>平江路 · 水街漫步</h4>
+              <span class="tlbadge tlbadge-water">游览</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p>苏州最美的历史街道，一边是古老的河道，一边是粉墙黛瓦的老宅。夕阳西下，河面泛金，是苏州最温柔的时光。</p>
+            <div class="photo-spots">
+              <div class="photo-spot-title">📸 打卡指南</div>
+              <div class="ps-grid">
+                <div class="ps-item"><span class="ps-ico">🌅</span><div><strong>傍晚河边</strong><p>夕阳打在白墙上，倒影入水，苏州最治愈的一刻</p></div></div>
+                <div class="ps-item"><span class="ps-ico">🏮</span><div><strong>夜晚灯光</strong><p>古灯亮起，水中倒影，夜景比白天更迷人</p></div></div>
+                <div class="ps-item"><span class="ps-ico">☕</span><div><strong>河边茶馆</strong><p>找一家临河的咖啡馆，坐下来感受苏州的慢时光</p></div></div>
+              </div>
+            </div>
+            <div class="tip-box" style="margin-top:12px">
+              <div class="tip-row">🍡 沿路小吃：桂花糕(¥8)、海棠糕(¥10)、芝麻汤圆(¥15)</div>
+              <div class="tip-row">📍 长约1.6公里，步行约40分钟，随走随停</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">19:30</div>
+        <div class="tl-dot tl-dot-gold"></div>
+        <div class="tl-card tl-featured">
+          <div class="tl-feat-label">🌟 今日晚宴</div>
+          <div class="tl-hd">
+            <span class="tl-ico">🍽</span>
+            <div>
+              <h4>松鹤楼 · 苏帮菜晚宴</h4>
+              <span class="tlbadge tlbadge-gold">美食</span>
+            </div>
+          </div>
+          <div class="tl-body">
+            <p><strong>松鹤楼</strong>创建于清乾隆年间，是苏州最著名的苏帮菜老字号。乾隆皇帝下江南时曾亲临用膳，一道松鼠鳜鱼让他念念不忘。</p>
+            <div class="tip-box">
+              <div class="tip-row">🐟 必点：<strong>松鼠鳜鱼</strong>（苏帮菜之首，¥198）</div>
+              <div class="tip-row">🦐 必点：碧螺虾仁 / 响油鳝糊 / 清炒枸杞芽</div>
+              <div class="tip-row">💰 人均约 ¥120～160（节约版可选苏式快餐 ¥50）</div>
+              <div class="tip-row">📍 观前街总店，营业至21:00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== DAY 2 ===== -->
+<section class="section bg-water" id="day2">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="s-tag">📅 DAY 2</div>
+      <h2 class="s-title">水乡古镇 · <em>同里留园</em></h2>
+      <p class="s-sub">摇橹声中穿越千年，古巷里感受最纯粹的江南</p>
+    </div>
+
+    <div class="tl">
+
+      <div class="tl-item reveal">
+        <div class="tl-time">07:30</div>
+        <div class="tl-dot tl-dot-gold"></div>
+        <div class="tl-card tl-featured">
+          <div class="tl-feat-label">🌸 江南早晨仪式感</div>
+          <div class="tl-hd"><span class="tl-ico">🌅</span>
+            <div><h4>苏式早餐 · 碧螺春茶配桂花糕</h4><span class="tlbadge tlbadge-gold">早餐</span></div>
+          </div>
+          <div class="tl-body">
+            <p>住在平江路，早晨随便推开一家早点铺，来碗<strong>苏式双档</strong>（油条+豆浆），或者去楼外楼点一份配碧螺春的早茶套餐，开启最有苏州腔调的一天。</p>
+            <div class="tip-box">
+              <div class="tip-row">🍵 碧螺春正宗产地就是苏州太湖边，当地喝到的才最鲜</div>
+              <div class="tip-row">🥮 桂花糕、海棠糕是苏州早点的灵魂小食</div>
+              <div class="tip-row">💰 早餐两人约 ¥30～50</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">09:00</div>
+        <div class="tl-dot tl-dot-water"></div>
+        <div class="tl-card tl-featured">
+          <div class="tl-feat-label">🏆 UNESCO 世界文化遗产</div>
+          <div class="tl-hd"><span class="tl-ico">⛵</span>
+            <div><h4>同里古镇 · 退思园</h4><span class="tlbadge tlbadge-water">古镇</span></div>
+          </div>
+          <div class="tl-body">
+            <p>距苏州18公里的<strong>同里古镇</strong>，是保存最完好的江南水乡之一。小桥流水、白墙黑瓦，<strong>退思园</strong>更是苏州园林世遗名单中的一员，小巧精致如诗如画。</p>
+            <div class="poi-box">
+              <div class="poi-row"><span>🚌</span><span>交通：苏州汽车北站乘公交 ¥7，或打车约 ¥40</span></div>
+              <div class="poi-row"><span>💰</span><span>古镇+退思园联票：<strong>100元/人</strong></span></div>
+              <div class="poi-row"><span>⏰</span><span>游览时长：约 3～4 小时</span></div>
+              <div class="poi-row"><span>🚣</span><span>摇橹船（可选）：¥80/船，穿越古巷水道，极力推荐</span></div>
+              <div class="poi-row"><span>📸</span><span>退思园中的贴水园、闹红一舸是最佳拍摄点</span></div>
+              <div class="poi-row"><span>🌸</span><span>春天古镇两岸柳絮飞，桃花盛开，美到极致</span></div>
+            </div>
+            <div class="photo-spots">
+              <div class="photo-spot-title">📸 同里必打卡点</div>
+              <div class="ps-grid">
+                <div class="ps-item"><span class="ps-ico">🌉</span><div><strong>三桥（太平·吉利·长庆）</strong><p>走三桥讨吉利，是苏州人的习俗，每座桥都有不同美景</p></div></div>
+                <div class="ps-item"><span class="ps-ico">🏡</span><div><strong>退思园贴水小轩</strong><p>建筑几乎贴着水面，倒影入水，构图绝美</p></div></div>
+                <div class="ps-item"><span class="ps-ico">🛶</span><div><strong>摇橹船视角</strong><p>坐在船里仰拍古桥，一镜出江南水乡大片</p></div></div>
+              </div>
+            </div>
+            <div class="snack-bar">
+              <div class="snack-title">🍡 同里必吃小吃</div>
+              <div class="snack-list">
+                <div class="snack-item"><span>🥩</span><div><strong>状元蹄</strong><p>入口即化，带走 ¥25/个</p></div></div>
+                <div class="snack-item"><span>🍡</span><div><strong>糯米圆子</strong><p>桂花甜糯，¥8/串</p></div></div>
+                <div class="snack-item"><span>🧁</span><div><strong>芡实糕</strong><p>苏州水乡特产，¥15/盒</p></div></div>
+                <div class="snack-item"><span>🍵</span><div><strong>碧螺春冲泡</strong><p>古镇茶馆现泡，¥28/壶</p></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">14:00</div>
+        <div class="tl-dot tl-dot-jade"></div>
+        <div class="tl-card">
+          <div class="tl-hd"><span class="tl-ico">🍲</span>
+            <div><h4>午餐 · 同里古镇农家菜</h4><span class="tlbadge tlbadge-jade">美食</span></div>
+          </div>
+          <div class="tl-body">
+            <p>古镇内随处可见苏帮家常菜，配着碗白米饭，清淡鲜甜，比城里的馆子更有烟火气。</p>
+            <div class="tip-box">
+              <div class="tip-row">🍽 推荐：<strong>清蒸白鱼</strong> + <strong>太湖三白</strong>（白鱼白虾银鱼）+ 青团</div>
+              <div class="tip-row">💰 人均约 ¥55～75，选靠河边的小店最有感觉</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">16:30</div>
+        <div class="tl-dot tl-dot-jade"></div>
+        <div class="tl-card tl-featured">
+          <div class="tl-feat-label">🏆 苏州四大园林</div>
+          <div class="tl-hd"><span class="tl-ico">🌳</span>
+            <div><h4>留园 · 精巧山水间</h4><span class="tlbadge tlbadge-jade">景点</span></div>
+          </div>
+          <div class="tl-body">
+            <p><strong>留园</strong>以其精湛的建筑艺术著称，园内回廊曲折、峰石奇绝，代表作<strong>冠云峰</strong>是江南最著名的太湖石之一，高6.5米，历经千年仍挺立。</p>
+            <div class="poi-box">
+              <div class="poi-row"><span>💰</span><span>门票：<strong>45元/人</strong>（淡旺季价格不同）</span></div>
+              <div class="poi-row"><span>⏰</span><span>游览时长：约 1.5～2 小时</span></div>
+              <div class="poi-row"><span>📸</span><span>冠云峰 / 五峰仙馆 / 曲溪楼 是最经典拍摄点</span></div>
+              <div class="poi-row"><span>🚌</span><span>从同里乘公交或打车返苏州市区约45分钟</span></div>
+            </div>
+            <div class="photo-spots">
+              <div class="photo-spot-title">📸 留园打卡点</div>
+              <div class="ps-grid">
+                <div class="ps-item"><span class="ps-ico">🪨</span><div><strong>冠云峰</strong><p>江南第一奇石，单独构图或配上蓝天，震撼人心</p></div></div>
+                <div class="ps-item"><span class="ps-ico">🏛</span><div><strong>五峰仙馆</strong><p>园内最大厅堂，楠木屏风金碧辉煌</p></div></div>
+                <div class="ps-item"><span class="ps-ico">🪟</span><div><strong>回廊漏窗</strong><p>320米回廊连接全园，漏窗各异，每一扇都是画框</p></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">19:00</div>
+        <div class="tl-dot tl-dot-petal"></div>
+        <div class="tl-card">
+          <div class="tl-hd"><span class="tl-ico">🍜</span>
+            <div><h4>晚餐 · 观前街苏式小馆</h4><span class="tlbadge tlbadge-petal">美食</span></div>
+          </div>
+          <div class="tl-body">
+            <p>回到苏州城区，在观前街附近找家苏式小馆，来一顿轻松的苏帮家常菜，价格实惠，滋味地道。</p>
+            <div class="tip-box">
+              <div class="tip-row">🦀 当季必点：<strong>清蒸大闸蟹</strong>（秋季）/ 碧螺虾仁（春夏）</div>
+              <div class="tip-row">🥟 苏式汤包：皮薄汤多，蘸醋最佳，¥22/笼</div>
+              <div class="tip-row">💰 人均约 ¥50～80</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== DAY 3 ===== -->
+<section class="section bg-jade" id="day3">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="s-tag">📅 DAY 3</div>
+      <h2 class="s-title">虎丘晨游 · <em>满载而归</em></h2>
+      <p class="s-sub">带着满箱特产和满心回忆，踏上归途</p>
+    </div>
+
+    <div class="tl">
+
+      <div class="tl-item reveal">
+        <div class="tl-time">08:00</div>
+        <div class="tl-dot tl-dot-jade"></div>
+        <div class="tl-card tl-featured">
+          <div class="tl-feat-label">🌄 千年古塔晨光</div>
+          <div class="tl-hd"><span class="tl-ico">🗼</span>
+            <div><h4>虎丘 · 吴中第一名胜</h4><span class="tlbadge tlbadge-jade">景点</span></div>
+          </div>
+          <div class="tl-body">
+            <p>苏东坡曾言：<em>"到苏州而不游虎丘，乃憾事也！"</em>。春晨的虎丘，薄雾笼罩，海棠云锦盛开，云岩寺塔斜立其间，是苏州最有诗意的一幕。</p>
+            <div class="poi-box">
+              <div class="poi-row"><span>💰</span><span>门票：<strong>60元/人</strong>（旺季）</span></div>
+              <div class="poi-row"><span>⏰</span><span>游览时长：约 1.5～2 小时</span></div>
+              <div class="poi-row"><span>🌸</span><span>春季亮点：海棠花节（3月末～4月），海棠云锦铺满山坡</span></div>
+              <div class="poi-row"><span>📸</span><span>最佳时间：早上8～10点，人少光线柔和，拍照绝了</span></div>
+              <div class="poi-row"><span>🗺</span><span>可步行或乘1/949路公交直达</span></div>
+            </div>
+            <div class="photo-spots">
+              <div class="photo-spot-title">📸 虎丘必拍点</div>
+              <div class="ps-grid">
+                <div class="ps-item"><span class="ps-ico">🗼</span><div><strong>云岩寺塔（虎丘斜塔）</strong><p>建于959年，比比萨斜塔还早，清晨薄雾中的塔影绝美</p></div></div>
+                <div class="ps-item"><span class="ps-ico">🌸</span><div><strong>海棠花海</strong><p>春天山路两侧海棠盛开，粉白相间，步步皆是美景</p></div></div>
+                <div class="ps-item"><span class="ps-ico">⚔️</span><div><strong>剑池</strong><p>传说是吴王阖闾藏剑处，深邃的水面倒映峭壁，神秘幽深</p></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">10:30</div>
+        <div class="tl-dot tl-dot-lotus"></div>
+        <div class="tl-card">
+          <div class="tl-hd"><span class="tl-ico">🎨</span>
+            <div><h4>苏州丝绸博物馆 / 苏绣体验</h4><span class="tlbadge" style="background:rgba(212,165,201,.15);color:var(--lotus)">文化</span></div>
+          </div>
+          <div class="tl-body">
+            <p>苏州是中国丝绸发源地之一，苏绣更是四大名绣之首。参观<strong>苏州丝绸博物馆</strong>（免费），了解苏州丝绸两千年历史；有条件可去绣庄体验刺绣。</p>
+            <div class="tip-box">
+              <div class="tip-row">🏛 苏州丝绸博物馆：免费参观，约1小时</div>
+              <div class="tip-row">🧵 苏绣体验：观前街附近绣庄，¥30～60/次</div>
+              <div class="tip-row">🎁 购买苏绣小物件作伴手礼，¥20～80不等</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">12:00</div>
+        <div class="tl-dot tl-dot-gold"></div>
+        <div class="tl-card tl-featured">
+          <div class="tl-feat-label">🎁 告别大采购</div>
+          <div class="tl-hd"><span class="tl-ico">🛍</span>
+            <div><h4>观前街 · 美食 + 特产总攻</h4><span class="tlbadge tlbadge-gold">购物</span></div>
+          </div>
+          <div class="tl-body">
+            <p><strong>观前街</strong>是苏州最繁华的商业步行街，各大老字号云集，是买特产和吃小吃的绝佳场所。</p>
+            <div class="souvenir-grid">
+              <div class="sv-item">
+                <span class="sv-ico">🍵</span>
+                <div><strong>碧螺春茶</strong><p>苏州最著名特产，太湖洞庭山正宗</p><em>¥50～200/盒</em></div>
+              </div>
+              <div class="sv-item">
+                <span class="sv-ico">🥮</span>
+                <div><strong>稻香村糕点</strong><p>苏州百年老字号，糖果点心礼盒</p><em>¥30～80/盒</em></div>
+              </div>
+              <div class="sv-item">
+                <span class="sv-ico">🍬</span>
+                <div><strong>采芝斋蜜饯</strong><p>苏式蜜饯，话梅·金桔·桂花口味</p><em>¥25～50/盒</em></div>
+              </div>
+              <div class="sv-item">
+                <span class="sv-ico">🧵</span>
+                <div><strong>苏绣小物件</strong><p>苏绣手帕·书签·团扇，精美礼品</p><em>¥20～80/件</em></div>
+              </div>
+            </div>
+            <div class="tip-box" style="margin-top:12px">
+              <div class="tip-row">🍽 告别午餐推荐：<strong>得月楼</strong>（百年老字号苏帮菜），人均 ¥80～100</div>
+              <div class="tip-row">🥟 临走前再吃一碗苏式面！</div>
+              <div class="tip-row">💰 特产预算约 ¥100～150</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-time">15:00</div>
+        <div class="tl-dot tl-dot-water"></div>
+        <div class="tl-card">
+          <div class="tl-hd"><span class="tl-ico">🚄</span>
+            <div><h4>苏州站 · 高铁返回北京</h4><span class="tlbadge tlbadge-water">返程</span></div>
+          </div>
+          <div class="tl-body">
+            <p>依依不舍地离开这座温柔的城市，装满特产，带着一肚子苏帮美食，登上高铁向北而行。约 4.5 小时后，抵达北京，结束这段春日江南梦。</p>
+            <div class="tip-box">
+              <div class="tip-row">🚄 推荐车次：G8312 / G124，约19:30到达北京南</div>
+              <div class="tip-row">💰 票价约 ¥235～310元/张</div>
+              <div class="tip-row">🎒 提前2小时到苏州站，预留时间买特产</div>
+              <div class="tip-row">🌙 在火车上回味苏州的一切，已经开始期待下一次</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== 美食专题 ===== -->
+<section class="section bg-petal" id="food">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="s-tag">🍜 FOOD</div>
+      <h2 class="s-title">苏州<em>美食地图</em></h2>
+      <p class="s-sub">清鲜甜润，不油不腻，这就是苏帮菜的美学</p>
+    </div>
+
+    <div class="food-grid">
+      <div class="food-card fc-hero reveal">
+        <div class="fc-emo">🍜</div>
+        <div class="fc-cnt">
+          <div class="fc-badge">No.1 必吃</div>
+          <h3>苏式汤面</h3>
+          <p>苏州人的一天从一碗汤面开始。红汤底色如枣红，浇头丰盛——三虾面、枫镇大肉面、爆鱼面，每一碗都是一种人生滋味。</p>
+          <div class="fc-tags">
+            <span>📍 朱鸿兴 / 同德兴</span>
+            <span>💰 ¥20～45/碗</span>
+            <span>🌟 枫镇大肉面是夏季限定</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card fc-hero reveal">
+        <div class="fc-emo">🐟</div>
+        <div class="fc-cnt">
+          <div class="fc-badge fc-badge-g">No.2 必吃</div>
+          <h3>松鼠鳜鱼</h3>
+          <p>苏帮菜的旗帜！鳜鱼花刀后高温油炸至形如松鼠，浇上酸甜番茄卤汁，外酥里嫩，酸甜鲜香，乾隆皇帝都为之折服。</p>
+          <div class="fc-tags">
+            <span>📍 松鹤楼 / 得月楼</span>
+            <span>💰 ¥168～228/条</span>
+            <span>🌟 苏帮菜博物馆级菜肴</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emo">🦐</div>
+        <div class="fc-cnt">
+          <h3>碧螺虾仁</h3>
+          <p>用碧螺春茶叶嫩芽包裹太湖新鲜虾仁，茶香与虾鲜融为一体，清雅脱俗，是苏帮菜最具诗意的一道。</p>
+          <div class="fc-tags"><span>💰 ¥78～118/份</span><span>🌟 春茶季最鲜美</span></div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emo">🐌</div>
+        <div class="fc-cnt">
+          <h3>响油鳝糊</h3>
+          <p>鳝鱼细丝配蒜末葱花，大火爆炒后淋上滚油，"滋啦"一声响，香气扑鼻，是苏帮菜中最有仪式感的一道。</p>
+          <div class="fc-tags"><span>💰 ¥48～68/份</span><span>🌟 须趁热食用</span></div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emo">🥟</div>
+        <div class="fc-cnt">
+          <h3>苏式汤包</h3>
+          <p>皮薄如纸、汤汁丰盈，一口下去满是蟹粉或鲜肉的鲜甜，蘸上姜丝米醋，是苏州早茶的绝对主角。</p>
+          <div class="fc-tags"><span>💰 ¥18～28/笼</span><span>📍 黄天源 / 老字号茶馆</span></div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emo">🎂</div>
+        <div class="fc-cnt">
+          <h3>苏式糕团（青团·桂花糕·定胜糕）</h3>
+          <p>苏州糕点甲天下！青团软糯清香、桂花糕甜而不腻、定胜糕粉红喜庆，每一口都是江南的温柔滋味。</p>
+          <div class="fc-tags"><span>💰 ¥5～15/个</span><span>📍 平江路沿线小店</span></div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emo">🦀</div>
+        <div class="fc-cnt">
+          <h3>太湖三白（白鱼·白虾·银鱼）</h3>
+          <p>太湖出产的三种最鲜美的水产，清蒸或水煮，原汁原味，是苏州人款待贵客的必备佳肴。</p>
+          <div class="fc-tags"><span>💰 ¥80～150/份</span><span>🌟 时令水产，春夏最鲜</span></div>
+        </div>
+      </div>
+
+      <div class="food-card reveal">
+        <div class="fc-emo">🍵</div>
+        <div class="fc-cnt">
+          <h3>碧螺春茶</h3>
+          <p>产于苏州太湖洞庭山，是中国十大名茶之一。采摘于清明前后，叶如雀舌，泡开后满杯清绿，茶香馥郁，回甘悠长。</p>
+          <div class="fc-tags"><span>💰 茶馆品茗 ¥28～58/壶</span><span>🌟 春茶最佳</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 拍照打卡 ===== -->
+<section class="section bg-paper" id="photo">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="s-tag">📸 PHOTO GUIDE</div>
+      <h2 class="s-title">苏州<em>拍照圣地</em>全攻略</h2>
+      <p class="s-sub">每一帧都是千年园林的馈赠</p>
+    </div>
+
+    <div class="photo-grid">
+      <div class="pg-card reveal">
+        <div class="pg-num">01</div>
+        <div class="pg-ico">🌉</div>
+        <h4>拙政园 · 小飞虹廊桥</h4>
+        <p>苏州园林唯一廊桥，从远香堂方向拍摄最佳，倒影入荷花池，秒出大片。</p>
+        <div class="pg-info">
+          <span>⏰ 最佳时间：上午9～11点</span>
+          <span>📷 构图建议：低角度带倒影</span>
+          <span>🌸 季节推荐：春季荷花前期</span>
+        </div>
+      </div>
+
+      <div class="pg-card reveal">
+        <div class="pg-num">02</div>
+        <div class="pg-ico">🏮</div>
+        <h4>平江路 · 夕阳河边</h4>
+        <p>傍晚17:00～18:30，夕阳斜照白墙，河面泛金，苏州最温柔的光线时刻。</p>
+        <div class="pg-info">
+          <span>⏰ 黄金时段：16:30～18:30</span>
+          <span>📷 站在桥上俯拍河道</span>
+          <span>🕯 夜晚古灯更有味道</span>
+        </div>
+      </div>
+
+      <div class="pg-card reveal">
+        <div class="pg-num">03</div>
+        <div class="pg-ico">🗼</div>
+        <h4>虎丘 · 斜塔与海棠</h4>
+        <p>春季海棠盛开时，以斜塔为背景拍花海，粉白与古塔同框，震撼而浪漫。</p>
+        <div class="pg-info">
+          <span>⏰ 最佳时间：晨8～10点（薄雾）</span>
+          <span>📷 广角镜头带全景</span>
+          <span>🌸 3月末～4月初最佳</span>
+        </div>
+      </div>
+
+      <div class="pg-card reveal">
+        <div class="pg-num">04</div>
+        <div class="pg-ico">🪟</div>
+        <h4>苏州园林 · 漏窗框景</h4>
+        <p>把人站在漏窗背面，透过花窗拍对面的园景，是苏州园林拍照的标准姿势。</p>
+        <div class="pg-info">
+          <span>📍 拙政园 / 留园 / 网师园均有</span>
+          <span>📷 对焦花窗，背景虚化</span>
+          <span>💡 逆光拍更有层次感</span>
+        </div>
+      </div>
+
+      <div class="pg-card reveal">
+        <div class="pg-num">05</div>
+        <div class="pg-ico">🛶</div>
+        <h4>同里古镇 · 摇橹船视角</h4>
+        <p>坐在船里仰拍古桥，或从岸边拍船过桥洞的瞬间，是同里古镇最具代表性的画面。</p>
+        <div class="pg-info">
+          <span>⏰ 上午光线最好</span>
+          <span>📷 桥洞框景构图绝美</span>
+          <span>🌸 春天柳絮飘飘入镜</span>
+        </div>
+      </div>
+
+      <div class="pg-card reveal">
+        <div class="pg-num">06</div>
+        <div class="pg-ico">🪨</div>
+        <h4>留园 · 冠云峰奇石</h4>
+        <p>江南第一奇石高6.5米，仰拍配蓝天白云，或侧逆光拍出石头的纹理与质感。</p>
+        <div class="pg-info">
+          <span>⏰ 午后光线最好</span>
+          <span>📷 低角度仰拍更震撼</span>
+          <span>💡 配上人物更有比例感</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 住宿推荐 ===== -->
+<section class="section bg-jade" id="hotel">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="s-tag">🏨 HOTEL</div>
+      <h2 class="s-title">住宿<em>推荐</em></h2>
+      <p class="s-sub">睡在苏州老城区，开门就是千年故事</p>
+    </div>
+
+    <div class="hotel-full-grid">
+      <div class="hf-card reveal">
+        <div class="hf-ico">🌿</div>
+        <div class="hf-level">推荐首选</div>
+        <h4>平江路精品民宿</h4>
+        <p>苏州最美历史街区内，白墙黛瓦小院，推窗见河，有些还带苏式庭院，体验感极强。</p>
+        <ul>
+          <li>📍 平江路步行街内或附近</li>
+          <li>✅ 步行10分钟达拙政园</li>
+          <li>✅ 楼下即是古街小吃</li>
+          <li>✅ 苏式建筑氛围感十足</li>
+        </ul>
+        <div class="hf-price">¥150～220 / 晚</div>
+      </div>
+
+      <div class="hf-card reveal">
+        <div class="hf-ico">🏮</div>
+        <div class="hf-level">性价比之选</div>
+        <h4>观前街附近经济型酒店</h4>
+        <p>观前街是苏州商业中心，配套齐全，交通方便，经济型连锁酒店选择多，性价比高。</p>
+        <ul>
+          <li>📍 观前街商圈500米内</li>
+          <li>✅ 地铁可达苏州站</li>
+          <li>✅ 周边美食餐厅密集</li>
+          <li>✅ 汉庭/如家/7天均有分店</li>
+        </ul>
+        <div class="hf-price">¥110～160 / 晚</div>
+      </div>
+
+      <div class="hf-card reveal">
+        <div class="hf-ico">⛺</div>
+        <div class="hf-level">预算节省版</div>
+        <h4>青年旅社 / 共享公寓</h4>
+        <p>若想最大化压缩住宿成本，平江路或苏州大学附近有不少性价比高的青旅，社交氛围佳。</p>
+        <ul>
+          <li>📍 平江路 / 苏大附近</li>
+          <li>✅ 多人间价格极低</li>
+          <li>✅ 遇到志同道合旅行者</li>
+          <li>✅ 通常含简单早餐</li>
+        </ul>
+        <div class="hf-price">¥60～100 / 晚（床位）</div>
+      </div>
+    </div>
+
+    <div class="hotel-tip reveal">
+      <strong>💡 住宿小建议：</strong>建议两晚都住在<strong>平江路 / 观前街</strong>附近，步行即可覆盖大部分景点，省去大量打车时间和费用。
+    </div>
+  </div>
+</section>
+
+<!-- ===== 预算明细 ===== -->
+<section class="section bg-paper" id="budget">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="s-tag">💰 BUDGET</div>
+      <h2 class="s-title">个人预算<em>明细</em></h2>
+      <p class="s-sub">一人2000元，把苏州玩得明明白白</p>
+    </div>
+
+    <div class="budget-wrap reveal">
+      <table class="btbl">
+        <thead>
+          <tr><th>类别</th><th>项目明细</th><th>金额(元)</th></tr>
+        </thead>
+        <tbody>
+          <tr class="bt-trans"><td rowspan="2" class="bc">🚄 交通</td><td>北京南→苏州 高铁（去程）</td><td>¥270</td></tr>
+          <tr class="bt-trans"><td>苏州→北京南 高铁（返程）</td><td>¥270</td></tr>
+          <tr class="bt-hotel"><td rowspan="2" class="bc">🏨 住宿</td><td>平江路精品民宿 第1晚</td><td>¥170</td></tr>
+          <tr class="bt-hotel"><td>平江路精品民宿 第2晚</td><td>¥170</td></tr>
+          <tr class="bt-ticket"><td rowspan="4" class="bc">🎫 门票</td><td>拙政园（旺季）</td><td>¥90</td></tr>
+          <tr class="bt-ticket"><td>同里古镇+退思园联票</td><td>¥100</td></tr>
+          <tr class="bt-ticket"><td>留园</td><td>¥45</td></tr>
+          <tr class="bt-ticket"><td>虎丘</td><td>¥60</td></tr>
+          <tr class="bt-food"><td rowspan="7" class="bc">🍜 餐饮</td><td>Day1 午：苏式汤面（朱鸿兴）</td><td>¥35</td></tr>
+          <tr class="bt-food"><td>Day1 晚：松鹤楼苏帮菜（节约版）</td><td>¥80</td></tr>
+          <tr class="bt-food"><td>Day1 平江路小吃</td><td>¥40</td></tr>
+          <tr class="bt-food"><td>Day2 早+午：同里古镇餐食</td><td>¥75</td></tr>
+          <tr class="bt-food"><td>Day2 晚：观前街苏式小馆</td><td>¥60</td></tr>
+          <tr class="bt-food"><td>Day3 早+午：苏式面+观前街</td><td>¥60</td></tr>
+          <tr class="bt-food"><td>全程零食饮品（碧螺春茶/糕团等）</td><td>¥50</td></tr>
+          <tr class="bt-taxi"><td class="bc">🚌 市内交通</td><td>地铁+公交+打车（3天）</td><td>¥80</td></tr>
+          <tr class="bt-taxi"><td class="bc">🚌 同里交通</td><td>苏州→同里→苏州（来回）</td><td>¥25</td></tr>
+          <tr class="bt-souvenir"><td class="bc">🎁 特产</td><td>碧螺春+稻香村糕点+采芝斋蜜饯</td><td>¥120</td></tr>
+          <tr class="bt-misc"><td class="bc">🔖 备用金</td><td>苏绣体验/导览/其他</td><td>¥70</td></tr>
+          <tr class="bt-total"><td colspan="2">🌿 合计（个人）</td><td>¥1,600 ± 200</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="budget-cards reveal">
+      <div class="bc-card bcc-trans"><div class="bci">🚄</div><div class="bcl">交通</div><div class="bcv">¥540</div><div class="bcp">27%</div></div>
+      <div class="bc-card bcc-hotel"><div class="bci">🏨</div><div class="bcl">住宿</div><div class="bcv">¥340</div><div class="bcp">17%</div></div>
+      <div class="bc-card bcc-ticket"><div class="bci">🎫</div><div class="bcl">门票</div><div class="bcv">¥295</div><div class="bcp">15%</div></div>
+      <div class="bc-card bcc-food"><div class="bci">🍜</div><div class="bcl">餐饮</div><div class="bcv">¥400</div><div class="bcp">20%</div></div>
+      <div class="bc-card bcc-other"><div class="bci">🎁</div><div class="bcl">其他</div><div class="bcv">¥225</div><div class="bcp">11%</div></div>
+    </div>
+
+    <div class="budget-note reveal">
+      💡 <strong>省钱小技巧：</strong>拙政园+苏州博物馆联票更划算；苏州博物馆（贝聿铭设计）免费，强烈建议参观；住青旅可省下 ¥150～200。
+    </div>
+  </div>
+</section>
+
+<!-- ===== 贴士 ===== -->
+<section class="section bg-petal" id="tips">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="s-tag">💡 TIPS</div>
+      <h2 class="s-title">苏州春游<em>实用贴士</em></h2>
+      <p class="s-sub">让每一步都走得从容优雅</p>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card reveal"><div class="tc-ico">🚄</div><h4>交通</h4><ul>
+        <li>高铁提前15天购票有折扣</li>
+        <li>苏州地铁1/4号线覆盖主景点</li>
+        <li>共享单车骑行平江路最惬意</li>
+        <li>同里古镇乘苏州公交752更省钱</li>
+      </ul></div>
+      <div class="tip-card reveal"><div class="tc-ico">🌸</div><h4>最佳时间</h4><ul>
+        <li>3月末：拙政园玉兰、海棠盛开</li>
+        <li>4月初：虎丘海棠花节（高峰期）</li>
+        <li>4月中旬：同里桃花、柳絮飘扬</li>
+        <li>避开清明/五一黄金周，人少更美</li>
+      </ul></div>
+      <div class="tip-card reveal"><div class="tc-ico">🎒</div><h4>装备建议</h4><ul>
+        <li>穿汉服/新中式去园林超出片</li>
+        <li>苏州路窄，别拉大箱子</li>
+        <li>带折叠伞，春雨说来就来</li>
+        <li>舒适平底鞋，石板路走一天</li>
+      </ul></div>
+      <div class="tip-card reveal"><div class="tc-ico">📸</div><h4>拍照技巧</h4><ul>
+        <li>园林早上9点前人少，光线最好</li>
+        <li>平江路傍晚"黄金一小时"最美</li>
+        <li>漏窗框景：人站背面看向园内拍</li>
+        <li>雨天苏州更有意境，别放弃出门</li>
+      </ul></div>
+      <div class="tip-card reveal"><div class="tc-ico">🍜</div><h4>美食攻略</h4><ul>
+        <li>苏式面一定要喝完最后一口汤</li>
+        <li>松鼠鳜鱼趁热吃，冷了不酥脆</li>
+        <li>观前街老字号稻香村最实惠</li>
+        <li>碧螺春买正宗洞庭山，别买假茶</li>
+      </ul></div>
+      <div class="tip-card reveal"><div class="tc-ico">⚠️</div><h4>注意事项</h4><ul>
+        <li>景区门票提前微信小程序预约</li>
+        <li>苏州话听不懂没关系，都讲普通话</li>
+        <li>雨天各景区会临时限流，提前查</li>
+        <li>苏州博物馆(贝聿铭设计)完全免费！</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-sec">
+  <div class="cta-inner reveal">
+    <div class="cta-deco">🌿 🌸 🎑 🌸 🌿</div>
+    <h2>出发吧，姑苏城外等你 🌿</h2>
+    <p>3天2夜，个人2000元，苏州园林 · 水乡古镇 · 苏帮美食<br>一步一画，一眼千年，这就是人间天堂</p>
+    <div class="cta-btns">
+      <a href="#top" class="cta-btn cta-jade">回到顶部 ↑</a>
+      <a href="#day1" class="cta-btn cta-gold">查看行程 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 页脚 ===== -->
+<footer class="foot">
+  <div class="foot-deco">🌿 ✦ 🌸 ✦ 🌿 ✦ 🌸 ✦ 🌿</div>
+  <p>© 2025 苏州春游攻略 · 3天2夜 · 北京出发 · 个人预算2000元</p>
+  <p style="margin-top:8px;opacity:.6;font-size:.82rem">君到姑苏见，人家尽枕河 · 愿每一段旅途都如春日温柔</p>
+</footer>
+
+<style>
+/* 美食卡片 */
+.food-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.food-card{background:var(--paper);border:1px solid rgba(245,201,203,.4);border-radius:16px;padding:22px;display:flex;gap:16px;box-shadow:0 4px 16px var(--shadow);transition:transform .3s,box-shadow .3s}
+.food-card:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(232,146,154,.15)}
+.fc-hero{grid-column:span 2;background:linear-gradient(135deg,rgba(245,201,203,.12) 0%,var(--paper) 70%);border-color:var(--petal)}
+.fc-emo{font-size:2.6rem;flex-shrink:0}
+.fc-cnt{flex:1}
+.fc-badge{display:inline-block;font-size:.68rem;font-weight:800;padding:2px 10px;border-radius:50px;background:linear-gradient(135deg,var(--petal2),var(--gold));color:#fff;margin-bottom:7px}
+.fc-badge-g{background:linear-gradient(135deg,var(--jade2),var(--jade))}
+.fc-cnt h3{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:7px}
+.fc-cnt p{font-size:.88rem;color:var(--ink-mid);line-height:1.8;margin-bottom:9px}
+.fc-tags{display:flex;flex-wrap:wrap;gap:7px}
+.fc-tags span{font-size:.75rem;color:var(--ink-light);background:rgba(123,196,168,.1);padding:3px 10px;border-radius:20px}
+/* 打卡 */
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pg-card{background:var(--paper);border-radius:16px;padding:24px;box-shadow:0 4px 16px var(--shadow);border-top:4px solid var(--jade);transition:transform .3s}
+.pg-card:hover{transform:translateY(-5px)}
+.pg-num{font-size:.7rem;font-weight:700;color:var(--jade2);background:rgba(123,196,168,.12);display:inline-block;padding:2px 10px;border-radius:50px;margin-bottom:10px}
+.pg-ico{font-size:2.2rem;margin-bottom:10px}
+.pg-card h4{font-size:.97rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+.pg-card p{font-size:.85rem;color:var(--ink-mid);line-height:1.8;margin-bottom:10px}
+.pg-info{display:flex;flex-direction:column;gap:5px}
+.pg-info span{font-size:.78rem;color:var(--ink-light)}
+/* 住宿 */
+.hotel-full-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.hf-card{background:var(--paper);border-radius:16px;padding:26px;box-shadow:0 4px 16px var(--shadow);border-left:4px solid var(--jade);transition:transform .3s}
+.hf-card:hover{transform:translateY(-5px)}
+.hf-ico{font-size:2.2rem;margin-bottom:8px}
+.hf-level{font-size:.7rem;color:var(--jade2);font-weight:700;background:rgba(123,196,168,.12);display:inline-block;padding:3px 10px;border-radius:50px;margin-bottom:10px}
+.hf-card h4{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+.hf-card p{font-size:.86rem;color:var(--ink-mid);line-height:1.8;margin-bottom:12px}
+.hf-card ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.hf-card li{font-size:.84rem;color:var(--ink-light)}
+.hf-price{margin-top:14px;font-weight:700;font-size:1rem;color:var(--jade2)}
+.hotel-tip{background:rgba(123,196,168,.1);border:1px solid rgba(123,196,168,.3);border-radius:12px;padding:16px 20px;margin-top:24px;font-size:.9rem;color:var(--ink-mid);line-height:1.8}
+/* 预算表 */
+.btbl{width:100%;border-collapse:collapse;border-radius:16px;overflow:hidden;box-shadow:0 4px 18px var(--shadow);font-size:.9rem}
+.btbl th{background:linear-gradient(135deg,var(--jade2),var(--water2));color:#fff;padding:13px 18px;text-align:left}
+.btbl td{padding:11px 18px;border-bottom:1px solid rgba(123,196,168,.15);color:var(--ink-mid)}
+.bc{font-weight:700;color:var(--ink)!important;background:rgba(123,196,168,.06);text-align:center;font-size:.85rem}
+.bt-trans td:last-child{color:var(--water2);font-weight:700}
+.bt-hotel td:last-child{color:var(--jade2);font-weight:700}
+.bt-ticket td:last-child{color:#9b59b6;font-weight:700}
+.bt-food td:last-child{color:var(--petal2);font-weight:700}
+.bt-taxi td:last-child{color:var(--water2);font-weight:700}
+.bt-souvenir td:last-child{color:var(--gold);font-weight:700}
+.bt-misc td:last-child{color:var(--ink-light);font-weight:700}
+.bt-total td{background:linear-gradient(135deg,rgba(123,196,168,.12),rgba(168,212,232,.12));font-weight:900;font-size:1.05rem;color:var(--jade2)!important}
+.budget-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
+.bc-card{border-radius:14px;padding:16px 10px;text-align:center;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.bcc-trans{background:linear-gradient(135deg,#74c0fc,#4a8eb5)}
+.bcc-hotel{background:linear-gradient(135deg,#74b69a,#3d9e7a)}
+.bcc-ticket{background:linear-gradient(135deg,#c39bd3,#9b59b6)}
+.bcc-food{background:linear-gradient(135deg,var(--petal),var(--petal2))}
+.bcc-other{background:linear-gradient(135deg,#e8c96a,var(--gold))}
+.bci{font-size:1.5rem}
+.bcl{font-size:.7rem;opacity:.9;margin:3px 0}
+.bcv{font-size:1rem;font-weight:800}
+.bcp{font-size:.68rem;opacity:.8}
+.budget-note{background:rgba(212,168,67,.08);border:1px solid rgba(212,168,67,.25);border-radius:12px;padding:14px 18px;margin-top:20px;font-size:.88rem;color:var(--ink-mid);line-height:1.8}
+/* 贴士 */
+.tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tip-card{background:var(--paper);border-radius:14px;padding:24px;box-shadow:0 4px 14px var(--shadow);border-top:4px solid var(--petal2);transition:transform .3s}
+.tip-card:hover{transform:translateY(-4px)}
+.tc-ico{font-size:2rem;margin-bottom:10px}
+.tip-card h4{font-size:.97rem;font-weight:700;color:var(--ink);margin-bottom:12px}
+.tip-card ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.tip-card li{font-size:.84rem;color:var(--ink-mid);padding-left:16px;position:relative;line-height:1.6}
+.tip-card li::before{content:'🌿';position:absolute;left:0;font-size:.72rem;top:2px}
+/* CTA */
+.cta-sec{position:relative;z-index:1;background:linear-gradient(135deg,rgba(123,196,168,.15) 0%,rgba(168,212,232,.15) 50%,rgba(212,168,67,.1) 100%),var(--cream);text-align:center;padding:90px 30px;border-top:1px solid rgba(212,168,67,.2)}
+.cta-inner{max-width:680px;margin:0 auto}
+.cta-deco{font-size:1.6rem;letter-spacing:5px;margin-bottom:22px;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.cta-sec h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;color:var(--ink);margin-bottom:14px}
+.cta-sec p{color:var(--ink-mid);font-size:1rem;line-height:1.9;margin-bottom:32px}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta-btn{padding:13px 32px;border-radius:50px;font-weight:700;font-size:.92rem;text-decoration:none;transition:transform .3s,box-shadow .3s;letter-spacing:.5px}
+.cta-btn:hover{transform:translateY(-3px)}
+.cta-jade{background:linear-gradient(135deg,var(--jade2),var(--jade));color:#fff;box-shadow:0 6px 18px rgba(61,158,122,.28)}
+.cta-gold{background:linear-gradient(135deg,var(--gold),#e8c96a);color:#fff;box-shadow:0 6px 18px rgba(212,168,67,.28)}
+/* 页脚 */
+.foot{position:relative;z-index:1;background:var(--ink);color:rgba(255,255,255,.75);text-align:center;padding:34px 20px;font-size:.88rem;line-height:1.8}
+.foot-deco{font-size:1.2rem;letter-spacing:5px;margin-bottom:10px;opacity:.6}
+@media(max-width:768px){
+  .food-grid{grid-template-columns:1fr}
+  .fc-hero{grid-column:span 1}
+  .photo-grid{grid-template-columns:1fr}
+  .hotel-full-grid{grid-template-columns:1fr}
+  .budget-cards{grid-template-columns:repeat(3,1fr)}
+  .tips-grid{grid-template-columns:1fr}
+}
+</style>
+
+<style>
+.tl-dot-lotus{background:var(--lotus);box-shadow:0 0 0 2px var(--lotus)}
+.souvenir-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.sv-item{display:flex;gap:12px;align-items:flex-start;background:rgba(212,168,67,.06);border:1px solid rgba(212,168,67,.2);border-radius:10px;padding:12px}
+.sv-ico{font-size:2rem;flex-shrink:0}
+.sv-item strong{display:block;font-size:.9rem;color:var(--ink);margin-bottom:3px}
+.sv-item p{font-size:.78rem;color:var(--ink-light);line-height:1.6;margin:0}
+.sv-item em{font-style:normal;color:var(--gold);font-weight:700;font-size:.8rem;display:block;margin-top:3px}
+.snack-bar{margin-top:14px;background:rgba(168,212,232,.1);border-radius:12px;padding:14px;border:1px solid rgba(168,212,232,.3)}
+.snack-title{font-size:.76rem;font-weight:700;color:var(--water2);margin-bottom:10px;letter-spacing:1px}
+.snack-list{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.snack-item{display:flex;gap:8px;align-items:flex-start}
+.snack-item span{font-size:1.4rem;flex-shrink:0}
+.snack-item strong{display:block;font-size:.82rem;color:var(--ink)}
+.snack-item p{font-size:.73rem;color:var(--ink-light);line-height:1.5;margin:0}
+@media(max-width:768px){
+  .souvenir-grid{grid-template-columns:1fr}
+  .snack-list{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+
+<!-- 全局组件CSS（就近注入）-->
+<style>
+/* ===== 概览卡片 ===== */
+.ov-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ov-card{
+  border-radius:20px;padding:30px 24px;color:#fff;
+  box-shadow:0 8px 28px rgba(0,0,0,.12);
+  transition:transform .3s;position:relative;overflow:hidden;
+}
+.ov-card::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(255,255,255,.08);
+}
+.ov-card:hover{transform:translateY(-6px)}
+.ov-c1{background:linear-gradient(135deg,#74b69a 0%,#3d9e7a 100%)}
+.ov-c2{background:linear-gradient(135deg,#7bb8d4 0%,#4a8eb5 100%)}
+.ov-c3{background:linear-gradient(135deg,#d4a87a 0%,#b8834a 100%)}
+.ov-day-badge{
+  display:inline-block;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;
+  background:rgba(255,255,255,.22);padding:4px 12px;border-radius:50px;
+  margin-bottom:14px;
+}
+.ov-icon{font-size:2.6rem;margin-bottom:10px}
+.ov-card h3{font-size:1.1rem;font-weight:800;margin-bottom:14px}
+.ov-card ul{list-style:none}
+.ov-card li{padding:5px 0;font-size:.88rem;opacity:.95;border-bottom:1px solid rgba(255,255,255,.18)}
+.ov-card li:last-child{border-bottom:none}
+.ov-note{
+  margin-top:16px;font-size:.78rem;
+  background:rgba(255,255,255,.18);
+  padding:7px 12px;border-radius:8px;
+  font-weight:600;
+}
+
+/* ===== 时间轴 ===== */
+.tl{position:relative;padding-left:96px}
+.tl::before{
+  content:'';position:absolute;left:38px;top:18px;bottom:18px;
+  width:2px;
+  background:linear-gradient(to bottom,var(--jade),var(--water2),var(--gold));
+  opacity:.4;border-radius:2px;
+}
+.tl-item{position:relative;margin-bottom:34px}
+.tl-time{
+  position:absolute;left:-84px;top:22px;
+  font-size:.75rem;font-weight:700;color:var(--jade2);
+  white-space:nowrap;
+}
+.tl-dot{
+  position:absolute;left:-51px;top:24px;
+  width:14px;height:14px;border-radius:50%;
+  border:2.5px solid #fff;
+  box-shadow:0 0 0 2px var(--jade);
+  background:var(--jade2);z-index:2;
+}
+.tl-dot-jade  {background:var(--jade2);box-shadow:0 0 0 2px var(--jade2)}
+.tl-dot-petal {background:var(--petal2);box-shadow:0 0 0 2px var(--petal2)}
+.tl-dot-water {background:var(--water2);box-shadow:0 0 0 2px var(--water2)}
+.tl-dot-gold  {background:var(--gold);box-shadow:0 0 0 2px var(--gold)}
+
+.tl-card{
+  background:var(--paper);
+  border-radius:16px;
+  padding:22px 26px;
+  box-shadow:0 4px 18px var(--shadow);
+  border-left:4px solid var(--jade);
+  transition:box-shadow .3s,transform .3s;
+}
+.tl-card:hover{box-shadow:0 8px 30px rgba(61,158,122,.15);transform:translateX(4px)}
+.tl-featured{
+  border-left-color:var(--gold);
+  background:linear-gradient(135deg,rgba(212,168,67,.05) 0%,var(--paper) 60%);
+}
+.tl-feat-label{
+  font-size:.7rem;font-weight:700;letter-spacing:1px;
+  color:var(--gold);
+  background:rgba(212,168,67,.12);
+  border:1px solid rgba(212,168,67,.3);
+  padding:3px 12px;border-radius:50px;
+  display:inline-block;margin-bottom:12px;
+}
+.tl-hd{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px}
+.tl-ico{font-size:1.9rem;flex-shrink:0;margin-top:2px}
+.tl-hd h4{font-size:1.05rem;font-weight:700;color:var(--ink);line-height:1.3}
+.tlbadge{
+  display:inline-block;font-size:.68rem;padding:2px 10px;
+  border-radius:50px;font-weight:600;margin-top:4px;
+}
+.tlbadge-jade  {background:rgba(61,158,122,.12);color:var(--jade2)}
+.tlbadge-petal {background:rgba(232,146,154,.12);color:var(--petal2)}
+.tlbadge-water {background:rgba(84,152,192,.12);color:var(--water2)}
+.tlbadge-gold  {background:rgba(212,168,67,.12);color:var(--gold)}
+.tl-body p{font-size:.92rem;color:var(--ink-mid);line-height:1.85;margin-bottom:10px}
+
+/* 提示框 */
+.tip-box{
+  background:#fafaf6;border-radius:10px;padding:12px 14px;
+  display:flex;flex-direction:column;gap:6px;
+  border:1px solid rgba(212,168,67,.2);
+}
+.tip-row{font-size:.84rem;color:var(--ink-mid);line-height:1.7}
+
+/* 住宿网格 */
+.hotel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.hotel-item{
+  background:rgba(123,196,168,.08);
+  border:1px solid rgba(123,196,168,.25);
+  border-radius:10px;padding:12px;
+}
+.hotel-name{font-size:.88rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.hotel-info{font-size:.78rem;color:var(--ink-light);margin-bottom:6px}
+.hotel-price{font-size:.85rem;font-weight:700;color:var(--jade2)}
+
+/* POI详情 */
+.poi-box{
+  background:rgba(123,196,168,.06);
+  border-radius:12px;padding:14px 16px;margin-top:10px;
+  display:flex;flex-direction:column;gap:8px;
+  border:1px solid rgba(123,196,168,.2);
+}
+.poi-row{display:flex;gap:10px;align-items:flex-start;font-size:.88rem;color:var(--ink-mid);line-height:1.7}
+.poi-row span:first-child{flex-shrink:0;font-size:1rem}
+
+/* 打卡点 */
+.photo-spots{
+  margin-top:14px;
+  background:rgba(245,201,203,.1);
+  border-radius:12px;padding:14px 16px;
+  border:1px solid rgba(245,201,203,.4);
+}
+.photo-spot-title{font-size:.78rem;font-weight:700;color:var(--petal2);margin-bottom:10px;letter-spacing:1px}
+.ps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ps-item{display:flex;gap:10px;align-items:flex-start}
+.ps-ico{font-size:1.5rem;flex-shrink:0}
+.ps-item strong{display:block;font-size:.88rem;color:var(--ink);margin-bottom:2px}
+.ps-item p{font-size:.78rem;color:var(--ink-light);line-height:1.6;margin:0}
+
+@media(max-width:768px){
+  .ov-grid{grid-template-columns:1fr}
+  .tl{padding-left:58px}
+  .tl::before{left:20px}
+  .tl-time{left:-56px;font-size:.68rem}
+  .tl-dot{left:-31px}
+  .hotel-grid{grid-template-columns:1fr}
+  .ps-grid{grid-template-columns:1fr}
+}
+</style>
+
+<script>
+/* 花瓣生成 */
+const pw = document.getElementById('petals');
+const pc = ['#f5c9cb','#e8929a','#d4a5c9','#f8dde0','#ffe0e6','#fcc8d1'];
+for(let i=0;i<32;i++){
+  const p=document.createElement('div');
+  p.className='petal';
+  p.style.left=Math.random()*100+'vw';
+  p.style.width=p.style.height=(7+Math.random()*10)+'px';
+  p.style.background=pc[Math.floor(Math.random()*pc.length)];
+  p.style.animationDelay=Math.random()*14+'s';
+  p.style.animationDuration=(12+Math.random()*14)+'s';
+  p.style.opacity=(.35+Math.random()*.45).toFixed(2);
+  pw.appendChild(p);
+}
+/* 滚动出现 */
+const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
